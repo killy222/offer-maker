@@ -1,0 +1,495 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="pb-12">
+  <div class="mx-auto max-w-7xl px-0 sm:px-0">
+    <header class="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-ob-xl border border-ob-peach100 bg-white/80 px-5 py-4 shadow-sm">
+      <div>
+        <p class="font-display text-[0.65rem] font-bold uppercase tracking-[0.14em] text-ob-peach600">{% trans "Issuer" %}</p>
+        <p class="font-display text-lg font-bold text-ob-ink">{{ company_profile.company_name }}</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 text-sm font-medium">
+        <a href="{% url 'offer_list' %}" class="rounded-ob px-3 py-2 text-ob-peach800 underline decoration-ob-peach200 hover:bg-ob-peach50">{% trans "All offers" %}</a>
+        <a href="{% url 'dashboard' %}" class="rounded-ob px-3 py-2 text-ob-peach800 underline decoration-ob-peach200 hover:bg-ob-peach50">{% trans "Dashboard" %}</a>
+      </div>
+    </header>
+
+    <div class="grid gap-6 lg:grid-cols-[minmax(260px,320px)_1fr]">
+      <aside class="space-y-6">
+        <section class="rounded-ob-xl border border-ob-peach100 bg-white p-5 shadow-sm">
+          <h2 class="font-display text-[0.65rem] font-bold uppercase tracking-[0.14em] text-ob-peach600">{% trans "Recent offers" %}</h2>
+          <ul class="mt-3 max-h-52 space-y-2 overflow-y-auto text-sm">
+            {% for o in recent_offers %}
+            <li>
+              <a href="{% url 'offer_create' %}?offer={{ o.pk }}" class="block rounded-ob-lg border border-ob-peach100 bg-ob-peach50/40 px-3 py-2.5 transition hover:border-ob-peach200 hover:bg-ob-peach50 {% if offer and o.pk == offer.pk %}border-ob-peach400 bg-ob-peach50 ring-1 ring-ob-peach200{% endif %}">
+                <span class="font-display font-semibold text-ob-ink">#{{ o.pk }}</span>
+                {% if o.client %}<span class="text-ob-muted"> — {{ o.client.name }}</span>{% endif %}
+                <span class="mt-0.5 block text-xs text-ob-muted">{{ o.updated_at|date:"Y-m-d H:i" }}</span>
+              </a>
+            </li>
+            {% empty %}
+            <li class="text-ob-muted">{% trans "No other offers yet." %}</li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <section class="rounded-ob-xl border border-ob-peach100 bg-white p-5 shadow-sm">
+          <h2 class="font-display text-[0.65rem] font-bold uppercase tracking-[0.14em] text-ob-peach600">{% trans "Product catalog" %}</h2>
+          <div class="mt-3">
+            <label class="sr-only" for="catalog-search">{% trans "Search products" %}</label>
+            <input type="search" id="catalog-search" autocomplete="off" placeholder="{% trans 'Search (min. 3 characters)…' %}" class="ob-skip-global w-full rounded-ob-lg border border-ob-line bg-[#fffef9] px-3 py-2 text-sm text-ob-ink shadow-inner focus:border-ob-peach400 focus:outline-none focus:ring-2 focus:ring-ob-peach200" />
+            <ul id="catalog-suggestions" class="mt-2 hidden max-h-44 overflow-y-auto rounded-ob-lg border border-ob-peach100 bg-ob-peach50/80 text-sm shadow-sm"></ul>
+          </div>
+          <ul class="mt-4 max-h-72 space-y-1 overflow-y-auto text-sm">
+            {% for item in catalog_items %}
+            <li class="flex items-center justify-between gap-2 rounded-ob-lg border border-transparent px-2 py-2 transition hover:border-ob-peach100 hover:bg-ob-peach50/60">
+              <div class="min-w-0">
+                <p class="truncate font-medium text-ob-ink">{{ item.name }}</p>
+                <p class="text-xs text-ob-muted">{{ item.final_price }} {% trans "BGN" %} / {{ item.unit.label_bg }}</p>
+              </div>
+              <button type="button" class="add-catalog inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-ob-peach800 text-lg font-bold leading-none text-white shadow-sm hover:bg-ob-peach600" data-catalog-id="{{ item.pk }}" title="{% trans 'Add to offer' %}">+</button>
+            </li>
+            {% empty %}
+            <li class="text-ob-muted">{% trans "No catalog items." %}</li>
+            {% endfor %}
+          </ul>
+        </section>
+      </aside>
+
+      <main class="rounded-ob-xl border border-ob-peach100 bg-white p-6 shadow-sm sm:p-8">
+        <h1 class="font-display text-xl font-bold text-ob-ink sm:text-2xl">{% trans "New offer" %}</h1>
+        <p class="mt-2 text-sm leading-relaxed text-ob-muted">{% trans "Line items save automatically when you add or edit rows. Click Save offer to store client and offer details (this creates the offer if it does not exist yet)." %}</p>
+        <p id="save-banner" class="mt-3 hidden rounded-ob-lg px-3 py-2 text-sm font-medium" role="status"></p>
+
+        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="relative sm:col-span-2 lg:col-span-1">
+            <label class="mb-1 block text-sm font-medium text-stone-700" for="fld-client">{% trans "Client" %}</label>
+            <input type="text" id="fld-client" autocomplete="off" placeholder="{% trans 'Type to search or enter a new name…' %}" class="ob-skip-global w-full rounded-ob-lg border border-ob-line bg-[#fffef9] px-3 py-2 text-sm focus:border-ob-peach400 focus:outline-none focus:ring-2 focus:ring-ob-peach200" value="{% if offer and offer.client %}{{ offer.client.name }}{% endif %}" />
+            <ul id="client-suggestions" class="absolute z-10 mt-1 hidden max-h-44 w-full overflow-y-auto rounded-ob-lg border border-ob-peach100 bg-white text-sm shadow-lg"></ul>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="mb-1 block text-sm font-medium text-stone-700" for="fld-site">{% trans "Site address" %}</label>
+            <input type="text" id="fld-site" value="{% if offer %}{{ offer.site_address }}{% endif %}" class="ob-skip-global w-full rounded-ob-lg border border-ob-line bg-[#fffef9] px-3 py-2 text-sm focus:border-ob-peach400 focus:outline-none focus:ring-2 focus:ring-ob-peach200" />
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium text-stone-700" for="fld-date">{% trans "Offer date" %}</label>
+            <input type="date" id="fld-date" value="{% if offer and offer.offer_date %}{{ offer.offer_date|date:'Y-m-d' }}{% endif %}" class="ob-skip-global w-full rounded-ob-lg border border-ob-line bg-[#fffef9] px-3 py-2 text-sm focus:border-ob-peach400 focus:outline-none focus:ring-2 focus:ring-ob-peach200" />
+          </div>
+          <div>
+            <label class="mb-1 block text-sm font-medium text-stone-700" for="fld-validity">{% trans "Validity" %}</label>
+            <select id="fld-validity" class="ob-skip-global w-full rounded-ob-lg border border-ob-line bg-[#fffef9] px-3 py-2 text-sm focus:border-ob-peach400 focus:outline-none focus:ring-2 focus:ring-ob-peach200">
+              {% for val, label in validity_options %}
+              <option value="{{ val }}" {% if offer %}{% if offer.validity_label == val %}selected{% endif %}{% else %}{% if val == "" %}selected{% endif %}{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="flex flex-col gap-2 sm:col-span-2 lg:col-span-1 lg:flex-row lg:items-end">
+            <button type="button" id="btn-save-header" class="w-full rounded-ob-lg border-2 border-ob-ink bg-white px-4 py-2.5 text-sm font-semibold text-ob-ink hover:bg-ob-peach50 lg:w-auto">
+              {% trans "Save offer" %}
+            </button>
+            <a id="link-offer-pdf" href="{% if offer %}{% url 'offer_pdf' offer.pk %}{% else %}#{% endif %}" class="inline-flex w-full items-center justify-center rounded-ob-lg border-2 border-ob-ink bg-white px-4 py-2.5 text-sm font-semibold text-ob-ink hover:bg-ob-peach50 lg:w-auto {% if not offer %}pointer-events-none opacity-40{% endif %}">
+              {% trans "Download PDF" %}
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-8 overflow-x-auto rounded-ob-xl border border-ob-peach100">
+          <table class="min-w-full border-collapse text-left text-sm">
+            <thead>
+              <tr class="bg-ob-peach50 text-xs font-bold uppercase tracking-wide text-ob-peach800">
+                <th class="px-4 py-3">{% trans "Description" %}</th>
+                <th class="px-4 py-3 w-24">{% trans "Qty" %}</th>
+                <th class="px-4 py-3 w-28">{% trans "Unit price" %}</th>
+                <th class="px-4 py-3 w-24">{% trans "VAT" %}%</th>
+                <th class="px-4 py-3 w-28">{% trans "Total" %}</th>
+                <th class="px-4 py-3 w-12"></th>
+              </tr>
+            </thead>
+            <tbody id="lines-body"></tbody>
+          </table>
+          <p id="lines-empty" class="hidden px-4 py-6 text-center text-sm text-ob-muted">{% trans "No lines yet. Add a product from the catalog." %}</p>
+        </div>
+
+        <footer class="mt-8 flex flex-col gap-4 border-t border-ob-peach100 pt-6 sm:flex-row sm:items-end sm:justify-between">
+          <dl class="space-y-1 rounded-ob-lg border border-ob-peach100 bg-ob-peach50/50 p-4 text-sm sm:min-w-[280px]">
+            <div class="flex justify-between gap-8">
+              <dt class="text-ob-muted">{% trans "Subtotal (ex VAT)" %}</dt>
+              <dd id="tot-sub" class="font-medium text-ob-ink">0.00 {% trans "BGN" %}</dd>
+            </div>
+            <div class="flex justify-between gap-8">
+              <dt class="text-ob-muted">{% trans "VAT" %}</dt>
+              <dd id="tot-vat" class="font-medium text-ob-ink">0.00 {% trans "BGN" %}</dd>
+            </div>
+            <div class="flex justify-between gap-8 border-t border-ob-peach100 pt-2 text-base">
+              <dt class="font-display font-bold text-ob-ink">{% trans "Total" %}</dt>
+              <dd id="tot-gross" class="font-display font-bold text-ob-peach800">0.00 {% trans "BGN" %}</dd>
+            </div>
+          </dl>
+        </footer>
+      </main>
+    </div>
+  </div>
+</div>
+
+{% csrf_token %}
+{{ offer_payload_dict|json_script:"initial-offer" }}
+{{ offer_i18n|json_script:"offer-i18n" }}
+<script>
+(function () {
+  const I18N = JSON.parse(document.getElementById("offer-i18n").textContent);
+  const offerStartUrl = "{{ offer_start_url }}";
+  const initialEl = document.getElementById("initial-offer");
+  let state = JSON.parse(initialEl.textContent);
+  let offerId = state.id;
+  const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  let selectedClientId = state.client_id || null;
+  let ensureOfferPromise = null;
+
+  function setPdfLinkEnabled(on) {
+    const a = document.getElementById("link-offer-pdf");
+    if (!a) return;
+    a.classList.toggle("pointer-events-none", !on);
+    a.classList.toggle("opacity-40", !on);
+  }
+
+  async function ensureOffer() {
+    if (offerId != null) return;
+    if (!ensureOfferPromise) {
+      ensureOfferPromise = api(offerStartUrl, { method: "POST", body: "{}" }).then((data) => {
+        offerId = data.id;
+        state = data;
+        selectedClientId = state.client_id || null;
+        const u = new URL(window.location.href);
+        u.searchParams.set("offer", String(offerId));
+        history.replaceState(null, "", u.pathname + "?" + u.searchParams.toString());
+        const pdfA = document.getElementById("link-offer-pdf");
+        if (pdfA) {
+          pdfA.setAttribute("href", "/offers/" + offerId + "/pdf/");
+          setPdfLinkEnabled(true);
+        }
+        applyState(data);
+      }).finally(() => {
+        ensureOfferPromise = null;
+      });
+    }
+    await ensureOfferPromise;
+  }
+
+  function formatMoney(s) {
+    const n = Number(s);
+    const loc = I18N.locale && I18N.locale.startsWith("bg") ? "bg-BG" : "en-GB";
+    const cur = I18N.currency || "BGN";
+    if (Number.isNaN(n)) return s + " " + cur;
+    return n.toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " " + cur;
+  }
+
+  function debounce(fn, ms) {
+    let t;
+    return function () {
+      clearTimeout(t);
+      const args = arguments;
+      t = setTimeout(() => fn.apply(null, args), ms);
+    };
+  }
+
+  function formatApiError(data, fallback) {
+    if (!data || data.error === undefined || data.error === null) {
+      return fallback || I18N.requestFailed;
+    }
+    const e = data.error;
+    if (typeof e === "string") return e;
+    if (typeof e === "object") {
+      const parts = [];
+      for (const k of Object.keys(e)) {
+        const v = e[k];
+        parts.push(k + ": " + (Array.isArray(v) ? v.join(" ") : String(v)));
+      }
+      return parts.length ? parts.join("; ") : I18N.validationError;
+    }
+    return fallback || I18N.requestFailed;
+  }
+
+  async function api(url, opts) {
+    const headers = Object.assign(
+      { "X-CSRFToken": csrftoken, "Content-Type": "application/json" },
+      opts.headers || {}
+    );
+    const res = await fetch(url, Object.assign({}, opts, { headers }));
+    const text = await res.text();
+    let data = {};
+    try {
+      data = text ? JSON.parse(text) : {};
+    } catch (e) {
+      data = { error: text.slice(0, 200) || res.statusText };
+    }
+    if (!res.ok) {
+      console.error(data);
+      throw new Error(formatApiError(data, res.statusText));
+    }
+    return data;
+  }
+
+  function showBanner(msg, ok) {
+    const el = document.getElementById("save-banner");
+    el.textContent = msg;
+    el.classList.remove("hidden", "bg-emerald-50", "text-emerald-800", "border", "border-emerald-200", "bg-red-50", "text-red-900", "border-red-200");
+    if (ok) {
+      el.classList.add("border", "border-emerald-200", "bg-emerald-50", "text-emerald-800");
+      setTimeout(() => el.classList.add("hidden"), 2500);
+    } else {
+      el.classList.add("border", "border-red-200", "bg-red-50", "text-red-900");
+    }
+  }
+
+  function applyState(data) {
+    state = data;
+    if (state.id != null) offerId = state.id;
+    selectedClientId = state.client_id || null;
+    const ci = document.getElementById("fld-client");
+    if (ci) ci.value = state.client_name || "";
+    const site = document.getElementById("fld-site");
+    if (site) site.value = state.site_address || "";
+    const dt = document.getElementById("fld-date");
+    if (dt) dt.value = state.offer_date || "";
+    const val = document.getElementById("fld-validity");
+    if (val) val.value = state.validity_label || "";
+    renderLines();
+    renderTotals();
+  }
+
+  function renderTotals() {
+    const t = state.totals || {};
+    document.getElementById("tot-sub").textContent = formatMoney(t.subtotal_ex_vat || "0");
+    document.getElementById("tot-vat").textContent = formatMoney(t.vat_amount || "0");
+    document.getElementById("tot-gross").textContent = formatMoney(t.total || "0");
+  }
+
+  function renderLines() {
+    const tb = document.getElementById("lines-body");
+    const empty = document.getElementById("lines-empty");
+    tb.innerHTML = "";
+    const lines = state.lines || [];
+    empty.classList.toggle("hidden", lines.length > 0);
+    lines.forEach((line) => {
+      const tr = document.createElement("tr");
+      tr.className = "border-t border-ob-peach100 bg-white";
+      tr.innerHTML =
+        '<td class="px-4 py-3 align-top">' +
+        '<div class="font-medium text-ob-ink">' +
+        escapeHtml(line.name) +
+        "</div>" +
+        '<div class="text-xs text-ob-muted">' +
+        escapeHtml(line.unit_label) +
+        "</div></td>" +
+        '<td class="px-4 py-3"><input type="number" step="0.0001" min="0.0001" class="line-qty ob-skip-global w-full rounded-lg border border-ob-line bg-[#fffef9] px-2 py-1.5 text-sm focus:border-ob-peach400 focus:outline-none focus:ring-1 focus:ring-ob-peach200" data-line-id="' +
+        line.id +
+        '" value="' +
+        line.quantity +
+        '" /></td>' +
+        '<td class="px-4 py-3"><input type="number" step="0.01" min="0" class="line-price ob-skip-global w-full rounded-lg border border-ob-line bg-[#fffef9] px-2 py-1.5 text-sm focus:border-ob-peach400 focus:outline-none focus:ring-1 focus:ring-ob-peach200" data-line-id="' +
+        line.id +
+        '" value="' +
+        line.unit_price +
+        '" /></td>' +
+        '<td class="px-4 py-3"><input type="number" step="0.01" min="0" max="100" class="line-vat ob-skip-global w-full rounded-lg border border-ob-line bg-[#fffef9] px-2 py-1.5 text-sm focus:border-ob-peach400 focus:outline-none focus:ring-1 focus:ring-ob-peach200" data-line-id="' +
+        line.id +
+        '" value="' +
+        line.vat_rate_percent +
+        '" /></td>' +
+        '<td class="px-4 py-3 font-semibold text-ob-ink">' +
+        formatMoney(line.line_gross) +
+        "</td>" +
+        '<td class="px-4 py-3"><button type="button" class="line-del inline-flex h-9 w-9 items-center justify-center rounded-lg border border-ob-peach200 bg-white text-lg leading-none text-ob-peach600 hover:bg-ob-peach50" data-line-id="' +
+        line.id +
+        '" title="' + escapeAttr(I18N.removeLineTitle) + '">×</button></td>';
+      tb.appendChild(tr);
+    });
+    tb.querySelectorAll(".line-qty").forEach((el) => {
+      el.addEventListener("input", debounceLinePatch(el.dataset.lineId, "quantity", el));
+    });
+    tb.querySelectorAll(".line-price").forEach((el) => {
+      el.addEventListener("input", debounceLinePatch(el.dataset.lineId, "unit_price", el));
+    });
+    tb.querySelectorAll(".line-vat").forEach((el) => {
+      el.addEventListener("input", debounceLinePatch(el.dataset.lineId, "vat_rate_percent", el));
+    });
+    tb.querySelectorAll(".line-del").forEach((el) => {
+      el.addEventListener("click", async () => {
+        const id = el.dataset.lineId;
+        const data = await api("/offers/api/lines/" + id + "/", { method: "DELETE" });
+        applyState(data);
+      });
+    });
+  }
+
+  function debounceLinePatch(lineId, field, inputEl) {
+    return debounce(async () => {
+      const body = {};
+      const v = inputEl.value;
+      if (field === "quantity" || field === "unit_price" || field === "vat_rate_percent") {
+        body[field] = v;
+      }
+      try {
+        const data = await api("/offers/api/lines/" + lineId + "/", {
+          method: "PATCH",
+          body: JSON.stringify(body),
+        });
+        applyState(data);
+      } catch (e) {
+        /* keep editing */
+      }
+    }, 400);
+  }
+
+  function escapeHtml(s) {
+    const d = document.createElement("div");
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function escapeAttr(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/</g, "&lt;");
+  }
+
+  async function saveHeader() {
+    try {
+      await ensureOffer();
+    } catch (e) {
+      showBanner(e && e.message ? e.message : I18N.couldNotStartOffer, false);
+      return;
+    }
+    const body = {
+      site_address: document.getElementById("fld-site").value,
+      offer_date: document.getElementById("fld-date").value || null,
+      validity_label: document.getElementById("fld-validity").value,
+    };
+    if (selectedClientId) {
+      body.client_id = selectedClientId;
+    } else {
+      body.client_name = document.getElementById("fld-client").value.trim();
+    }
+    try {
+      const data = await api("/offers/api/offers/" + offerId + "/", {
+        method: "PATCH",
+        body: JSON.stringify(body),
+      });
+      applyState(data);
+      showBanner(I18N.saved, true);
+    } catch (e) {
+      const msg = e && e.message ? e.message : I18N.saveFailed;
+      showBanner(msg, false);
+    }
+  }
+
+  document.getElementById("btn-save-header").addEventListener("click", saveHeader);
+
+  const clientInput = document.getElementById("fld-client");
+  const clientSugg = document.getElementById("client-suggestions");
+  const debouncedClientSearch = debounce(async () => {
+    const q = clientInput.value.trim();
+    if (q.length < 3) {
+      clientSugg.classList.add("hidden");
+      clientSugg.innerHTML = "";
+      return;
+    }
+    const res = await fetch("/offers/api/client-search/?q=" + encodeURIComponent(q));
+    const data = await res.json();
+    clientSugg.innerHTML = "";
+    (data.results || []).forEach((r) => {
+      const li = document.createElement("li");
+      li.className = "cursor-pointer border-b border-ob-peach100 px-3 py-2 last:border-0 hover:bg-ob-peach50";
+      li.textContent = r.name;
+      li.addEventListener("click", () => {
+        selectedClientId = r.id;
+        clientInput.value = r.name;
+        clientSugg.classList.add("hidden");
+      });
+      clientSugg.appendChild(li);
+    });
+    clientSugg.classList.toggle("hidden", !clientSugg.children.length);
+  }, 300);
+
+  clientInput.addEventListener("input", () => {
+    selectedClientId = null;
+    debouncedClientSearch();
+  });
+  document.addEventListener("click", (e) => {
+    if (!clientSugg.contains(e.target) && e.target !== clientInput) clientSugg.classList.add("hidden");
+  });
+
+  document.querySelectorAll(".add-catalog").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      try {
+        await ensureOffer();
+      } catch (e) {
+        showBanner(e && e.message ? e.message : I18N.couldNotStartOffer, false);
+        return;
+      }
+      const id = btn.getAttribute("data-catalog-id");
+      const data = await api("/offers/api/lines/add/", {
+        method: "POST",
+        body: JSON.stringify({ offer_id: offerId, catalog_item_id: id }),
+      });
+      applyState(data);
+    });
+  });
+
+  const searchInput = document.getElementById("catalog-search");
+  const sugg = document.getElementById("catalog-suggestions");
+  const debouncedSearch = debounce(async () => {
+    const q = searchInput.value.trim();
+    if (q.length < 3) {
+      sugg.classList.add("hidden");
+      sugg.innerHTML = "";
+      return;
+    }
+    const res = await fetch("/offers/api/catalog-search/?q=" + encodeURIComponent(q));
+    const data = await res.json();
+    sugg.innerHTML = "";
+    (data.results || []).forEach((r) => {
+      const li = document.createElement("li");
+      li.className = "flex cursor-pointer items-center justify-between gap-2 border-b border-ob-peach100 px-2 py-2 last:border-0 hover:bg-white";
+      li.innerHTML =
+        '<span class="text-ob-ink">' +
+        escapeHtml(r.name) +
+        '</span><span class="text-xs text-ob-muted">' +
+        escapeHtml(r.unit_label) +
+        "</span>";
+      li.addEventListener("click", async () => {
+        sugg.classList.add("hidden");
+        searchInput.value = "";
+        try {
+          await ensureOffer();
+        } catch (e) {
+          showBanner(e && e.message ? e.message : I18N.couldNotStartOffer, false);
+          return;
+        }
+        const payload = await api("/offers/api/lines/add/", {
+          method: "POST",
+          body: JSON.stringify({ offer_id: offerId, catalog_item_id: r.id }),
+        });
+        applyState(payload);
+      });
+      sugg.appendChild(li);
+    });
+    sugg.classList.toggle("hidden", !sugg.children.length);
+  }, 300);
+
+  searchInput.addEventListener("input", debouncedSearch);
+  document.addEventListener("click", (e) => {
+    if (!sugg.contains(e.target) && e.target !== searchInput) sugg.classList.add("hidden");
+  });
+
+  renderLines();
+  renderTotals();
+})();
+</script>
+{# Tailwind CDN scans static HTML; classes built in JS above are listed here for JIT. #}
+<div class="pointer-events-none fixed h-0 w-0 overflow-hidden opacity-0" aria-hidden="true">
+  <span class="border-t border-ob-peach100 bg-white px-4 py-3 align-top font-medium font-semibold text-ob-ink text-xs text-ob-muted ob-skip-global w-full rounded-lg border border-ob-line bg-[#fffef9] px-2 py-1.5 text-sm focus:border-ob-peach400 focus:outline-none focus:ring-1 focus:ring-ob-peach200 line-qty line-price line-vat line-del inline-flex h-9 w-9 items-center justify-center rounded-lg border-ob-peach200 text-lg leading-none text-ob-peach600 hover:bg-ob-peach50"></span>
+</div>
+{% endblock %}

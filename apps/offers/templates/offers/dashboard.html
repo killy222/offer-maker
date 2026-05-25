@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="rounded-ob-xl border border-ob-peach100 bg-white p-8 shadow-sm">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+            <h1 class="font-display text-2xl font-bold text-ob-ink">{% trans "Offers" %}</h1>
+            <p class="mt-1 text-sm text-ob-muted">{% trans "Newest first. Empty drafts with no details are hidden." %}</p>
+            {% if company_profile %}
+            <div class="mt-4 rounded-ob-lg border border-emerald-200/70 bg-emerald-50/90 px-4 py-3 text-sm text-emerald-900">
+                {% trans "Issuer:" %} <strong>{{ company_profile.company_name }}</strong>
+            </div>
+            {% else %}
+            <div class="mt-4 rounded-ob-lg border border-amber-200/80 bg-amber-50 px-4 py-3 text-sm text-amber-950">
+                {% trans "No company profile yet." %}
+                <a href="{% url 'company_profile' %}" class="font-medium text-ob-peach800 underline decoration-ob-peach200 hover:text-ob-peach600">{% trans "Set up profile" %}</a>.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if offers %}
+    <ul class="mt-8 grid gap-3 sm:grid-cols-1">
+        {% for offer in offers %}
+        <li class="rounded-ob-xl border border-ob-peach100 bg-ob-peach50/40 p-4 transition hover:border-ob-peach200 hover:bg-ob-peach50/80">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div class="min-w-0 flex-1">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <p class="font-display font-semibold text-ob-ink">
+                            {% blocktrans with n=offer.pk %}Offer #{{ n }}{% endblocktrans %}
+                            {% if offer.client %}<span class="font-sans font-normal text-ob-muted"> — {{ offer.client.name }}</span>{% endif %}
+                        </p>
+                        <span class="rounded-full bg-white px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-ob-peach600 ring-1 ring-ob-peach200">{% trans "Draft" %}</span>
+                    </div>
+                    <p class="mt-1.5 text-sm text-ob-muted">
+                        {% if offer.line_count == 1 %}
+                        {% blocktrans with d=offer.updated_at|date:"Y-m-d H:i" %}1 line · updated {{ d }}{% endblocktrans %}
+                        {% else %}
+                        {% blocktrans with c=offer.line_count d=offer.updated_at|date:"Y-m-d H:i" %}{{ c }} lines · updated {{ d }}{% endblocktrans %}
+                        {% endif %}
+                    </p>
+                </div>
+                <a href="{% url 'offer_detail' offer.pk %}" class="inline-flex shrink-0 items-center justify-center rounded-ob-lg border-2 border-ob-ink bg-white px-4 py-2 text-sm font-semibold text-ob-ink hover:bg-ob-peach50">
+                    {% trans "View" %}
+                </a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="mt-8 rounded-ob-lg border border-dashed border-ob-peach200 bg-ob-peach50/50 p-6 text-sm text-ob-muted">
+        {% trans "No offers to show yet." %} <a href="{% url 'offer_create' %}" class="font-medium text-ob-peach800 underline hover:text-ob-peach600">{% trans "Create an offer" %}</a> {% trans "or save header details / add a line so a draft appears here." %}
+    </p>
+    {% endif %}
+
+    {% if is_paginated %}
+    <nav class="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-ob-peach100 pt-6 text-sm text-ob-muted" aria-label="{% trans 'Pagination' %}">
+        <span>{% blocktrans with p=page_obj.number t=paginator.num_pages %}Page {{ p }} of {{ t }}{% endblocktrans %}</span>
+        <div class="flex flex-wrap gap-2">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="rounded-ob-lg border-2 border-ob-ink bg-white px-4 py-2 font-semibold text-ob-ink hover:bg-ob-peach50">{% trans "Previous" %}</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="rounded-ob-lg border-2 border-ob-ink bg-white px-4 py-2 font-semibold text-ob-ink hover:bg-ob-peach50">{% trans "Next" %}</a>
+            {% endif %}
+        </div>
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}

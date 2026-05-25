@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="rounded-ob-xl border border-ob-peach100 bg-white p-8 shadow-sm">
+    <h1 class="font-display text-2xl font-bold text-ob-ink">{{ form_title }}</h1>
+    <p class="mt-2 text-sm text-ob-muted">{% trans "Only the client name is required." %}</p>
+
+    <form method="post" class="mt-6 grid gap-4">
+        {% csrf_token %}
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-stone-700" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-stone-700" for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
+            {{ form.address }}
+            {{ form.address.errors }}
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-stone-700" for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+            {{ form.phone }}
+            {{ form.phone.errors }}
+        </div>
+
+        {% if form.non_field_errors %}
+        <div class="rounded-ob-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <div class="flex flex-wrap gap-3">
+            <button type="submit" class="rounded-ob-lg bg-ob-peach800 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-ob-peach600">
+                {{ submit_label }}
+            </button>
+            <a href="{% url 'client_list' %}" class="rounded-ob-lg border-2 border-ob-ink bg-white px-5 py-2.5 text-sm font-semibold text-ob-ink hover:bg-ob-peach50">
+                {% trans "Cancel" %}
+            </a>
+        </div>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="mx-auto max-w-md rounded-ob-xl border border-ob-peach100 bg-white p-8 shadow-md">
+    <h1 class="font-display text-2xl font-bold text-ob-ink">{% trans "Operator login" %}</h1>
+    <p class="mt-2 text-sm text-ob-muted">{% trans "Sign in to manage offers and products/services." %}</p>
+
+    {% if form.errors %}
+    <div class="mt-4 rounded-ob-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
+        {% trans "Please enter a correct username and password." %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="mt-6 space-y-4">
+        {% csrf_token %}
+        <div>
+            <label for="{{ form.username.id_for_label }}" class="mb-1 block text-sm font-medium text-stone-700">{% trans "Username" %}</label>
+            {{ form.username }}
+        </div>
+        <div>
+            <label for="{{ form.password.id_for_label }}" class="mb-1 block text-sm font-medium text-stone-700">{% trans "Password" %}</label>
+            {{ form.password }}
+        </div>
+        <button type="submit" class="w-full rounded-ob-lg bg-ob-peach800 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-ob-peach600">
+            {% trans "Sign in" %}
+        </button>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+    <p class="mt-4 text-sm text-ob-muted">
+        <a href="{% url 'password_reset' %}" class="font-medium text-ob-peach800 underline decoration-ob-peach200 hover:text-ob-peach600">{% trans "Forgot password?" %}</a>
+    </p>
+</section>
+{% endblock %}

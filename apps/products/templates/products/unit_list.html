@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="rounded-ob-xl border border-ob-peach100 bg-white p-8 shadow-sm">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h1 class="font-display text-2xl font-bold text-ob-ink">{% trans "Units" %}</h1>
+            <p class="mt-1 text-sm text-ob-muted">{% trans "Manage measurement units used in product catalog items." %}</p>
+        </div>
+        <a href="{% url 'unit_create' %}" class="inline-flex justify-center rounded-ob-lg bg-ob-peach800 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-ob-peach600">
+            {% trans "Add unit" %}
+        </a>
+    </div>
+
+    {% if units %}
+    <ul class="mt-8 grid gap-3">
+        {% for unit in units %}
+        <li class="rounded-ob-xl border border-ob-peach100 bg-ob-peach50/30 p-4 transition hover:border-ob-peach200 hover:bg-ob-peach50/60">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div class="min-w-0 flex-1">
+                    <p class="font-display text-lg font-semibold text-ob-ink">{{ unit.label_bg }}</p>
+                    <dl class="mt-2 grid gap-1 text-sm text-ob-muted sm:grid-cols-2">
+                        <div><dt class="inline text-ob-muted/80">{% trans "Code:" %}</dt> <dd class="inline font-medium text-ob-ink">{{ unit.code }}</dd></div>
+                        <div><dt class="inline text-ob-muted/80">{% trans "Sort:" %}</dt> <dd class="inline font-medium text-ob-ink">{{ unit.sort_order }}</dd></div>
+                    </dl>
+                </div>
+                <div class="flex shrink-0 items-center gap-2">
+                    <a href="{% url 'unit_edit' unit.pk %}" class="inline-flex items-center justify-center rounded-ob-lg border-2 border-ob-ink bg-white px-4 py-2 text-sm font-semibold text-ob-ink hover:bg-ob-peach50">
+                        {% trans "Edit" %}
+                    </a>
+                    <form method="post" action="{% url 'unit_delete' unit.pk %}" class="inline" onsubmit="return confirm('{% filter escapejs %}{% trans "Delete this unit? This cannot be undone if the unit is not used by any catalog item." %}{% endfilter %}');">
+                        {% csrf_token %}
+                        <button type="submit" class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-ob-peach200 bg-white text-lg leading-none text-ob-peach600 hover:bg-ob-peach100" title="{% trans 'Delete' %}">×</button>
+                    </form>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="mt-8 rounded-ob-lg border border-dashed border-ob-peach200 bg-ob-peach50/50 p-6 text-sm text-ob-muted">
+        {% trans "No units yet." %} <a href="{% url 'unit_create' %}" class="font-medium text-ob-peach800 underline hover:text-ob-peach600">{% trans "Add your first unit" %}</a>.
+    </p>
+    {% endif %}
+
+    <p class="mt-8">
+        <a href="{% url 'catalog_list' %}" class="text-sm font-medium text-ob-peach800 underline decoration-ob-peach200 hover:text-ob-peach600">{% trans "Back to catalog" %}</a>
+    </p>
+</section>
+{% endblock %}

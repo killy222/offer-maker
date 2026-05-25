@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="rounded-ob-xl border border-ob-peach100 bg-white p-8 shadow-sm">
+  <div class="flex flex-col gap-4 border-b border-ob-peach100 pb-6 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+      <h1 class="font-display text-2xl font-bold text-ob-ink">{% blocktrans with n=offer.pk %}Offer #{{ n }}{% endblocktrans %}</h1>
+      <p class="mt-1 text-sm text-ob-muted">{% trans "Read-only summary" %}</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <a href="{% url 'offer_create' %}?offer={{ offer.pk }}" class="inline-flex justify-center rounded-ob-lg bg-ob-peach800 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-ob-peach600">
+        {% trans "Open in builder" %}
+      </a>
+      <a href="{% url 'offer_pdf' offer.pk %}" class="inline-flex justify-center rounded-ob-lg border-2 border-ob-ink bg-white px-5 py-2.5 text-sm font-semibold text-ob-ink hover:bg-ob-peach50">
+        {% trans "Download PDF" %}
+      </a>
+    </div>
+  </div>
+
+  <dl class="mt-6 grid gap-4 text-sm sm:grid-cols-2">
+    <div>
+      <dt class="font-medium text-ob-muted">{% trans "Client" %}</dt>
+      <dd class="mt-1 text-ob-ink">{% if offer.client %}{{ offer.client.name }}{% else %}{% trans "—" %}{% endif %}</dd>
+    </div>
+    <div>
+      <dt class="font-medium text-ob-muted">{% trans "Site address" %}</dt>
+      <dd class="mt-1 text-ob-ink">{% if offer.site_address %}{{ offer.site_address }}{% else %}{% trans "—" %}{% endif %}</dd>
+    </div>
+    <div>
+      <dt class="font-medium text-ob-muted">{% trans "Offer date" %}</dt>
+      <dd class="mt-1 text-ob-ink">{% if offer.offer_date %}{{ offer.offer_date|date:"Y-m-d" }}{% else %}{% trans "—" %}{% endif %}</dd>
+    </div>
+    <div>
+      <dt class="font-medium text-ob-muted">{% trans "Validity" %}</dt>
+      <dd class="mt-1 text-ob-ink">{% if offer.validity_label %}{{ offer.validity_label }}{% else %}{% trans "—" %}{% endif %}</dd>
+    </div>
+  </dl>
+
+  <div class="mt-8 overflow-x-auto">
+    <h2 class="font-display text-xs font-bold uppercase tracking-[0.12em] text-ob-peach600">{% trans "Line items" %}</h2>
+    <table class="mt-3 min-w-full border-collapse overflow-hidden rounded-ob-lg border border-ob-peach100 text-left text-sm">
+      <thead>
+        <tr class="bg-ob-peach50 text-xs font-bold uppercase tracking-wide text-ob-peach800">
+          <th class="px-4 py-3">{% trans "Description" %}</th>
+          <th class="px-4 py-3">{% trans "Qty" %}</th>
+          <th class="px-4 py-3">{% trans "Unit" %}</th>
+          <th class="px-4 py-3">{% trans "Unit price" %}</th>
+          <th class="px-4 py-3">{% trans "VAT" %}%</th>
+          <th class="px-4 py-3">{% trans "Line total" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for line in offer.lines.all %}
+        <tr class="border-t border-ob-peach100 bg-white">
+          <td class="px-4 py-3 font-medium text-ob-ink">{{ line.catalog_item.name }}</td>
+          <td class="px-4 py-3 text-ob-muted">{{ line.quantity }}</td>
+          <td class="px-4 py-3 text-ob-muted">{{ line.catalog_item.unit.label_bg }}</td>
+          <td class="px-4 py-3 text-ob-muted">{{ line.unit_price }}</td>
+          <td class="px-4 py-3 text-ob-muted">{{ line.vat_rate_percent }}</td>
+          <td class="px-4 py-3 font-semibold text-ob-ink">{{ line.line_gross }} {% trans "BGN" %}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="px-4 py-6 text-center text-ob-muted">{% trans "No line items." %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% with t=offer.totals_display %}
+  <dl class="mt-8 space-y-2 rounded-ob-lg border border-ob-peach100 bg-ob-peach50/50 p-5 text-sm sm:max-w-md">
+    <div class="flex justify-between gap-4">
+      <dt class="text-ob-muted">{% trans "Subtotal (ex VAT)" %}</dt>
+      <dd class="font-medium text-ob-ink">{{ t.subtotal_ex_vat }} {% trans "BGN" %}</dd>
+    </div>
+    <div class="flex justify-between gap-4">
+      <dt class="text-ob-muted">{% trans "VAT" %}</dt>
+      <dd class="font-medium text-ob-ink">{{ t.vat_amount }} {% trans "BGN" %}</dd>
+    </div>
+    <div class="flex justify-between gap-4 border-t border-ob-peach100 pt-2 text-base">
+      <dt class="font-display font-bold text-ob-ink">{% trans "Total" %}</dt>
+      <dd class="font-display font-bold text-ob-peach800">{{ t.total }} {% trans "BGN" %}</dd>
+    </div>
+  </dl>
+  {% endwith %}
+
+  <p class="mt-8">
+    <a href="{% url 'dashboard' %}" class="text-sm font-medium text-ob-peach800 underline decoration-ob-peach200 hover:text-ob-peach600">{% trans "Back to offers" %}</a>
+  </p>
+</section>
+{% endblock %}

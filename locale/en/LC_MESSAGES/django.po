@@ -1,0 +1,661 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-04 19:23+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps/clients/forms.py:12
+msgid "Client name"
+msgstr ""
+
+#: apps/clients/forms.py:13
+msgid "Address"
+msgstr ""
+
+#: apps/clients/forms.py:14 apps/company/forms.py:32
+msgid "Phone"
+msgstr ""
+
+#: apps/clients/forms.py:20 apps/products/forms.py:29 apps/products/forms.py:35
+#: apps/products/forms.py:43
+msgid "This field is required."
+msgstr ""
+
+#: apps/clients/templates/clients/client_form.html:7
+msgid "Only the client name is required."
+msgstr ""
+
+#: apps/clients/templates/clients/client_form.html:41
+#: apps/products/templates/products/catalog_form.html:60
+msgid "Cancel"
+msgstr ""
+
+#: apps/clients/templates/clients/client_list.html:8
+msgid "Client companies"
+msgstr ""
+
+#: apps/clients/templates/clients/client_list.html:9
+msgid "Recipients you prepare offers for."
+msgstr ""
+
+#: apps/clients/templates/clients/client_list.html:12
+msgid "Add client"
+msgstr ""
+
+#: apps/clients/templates/clients/client_list.html:32
+#: apps/products/templates/products/catalog_list.html:35
+msgid "Edit"
+msgstr ""
+
+#: apps/clients/templates/clients/client_list.html:34
+msgid ""
+"Delete this client? Offers that used them will keep their other data; the "
+"client link will be cleared."
+msgstr ""
+
+#: apps/clients/templates/clients/client_list.html:36
+#: apps/products/templates/products/catalog_list.html:39
+msgid "Delete"
+msgstr ""
+
+#: apps/clients/templates/clients/client_list.html:45
+msgid "No clients yet."
+msgstr ""
+
+#: apps/clients/templates/clients/client_list.html:45
+msgid "Add your first client"
+msgstr ""
+
+#: apps/clients/templates/clients/client_list.html:50
+#: apps/offers/templates/offers/offer_detail.html:90
+#: apps/products/templates/products/catalog_list.html:53
+msgid "Back to offers"
+msgstr ""
+
+#: apps/clients/views.py:52
+#, python-format
+msgid "Client \"%(name)s\" was deleted."
+msgstr ""
+
+#: apps/company/forms.py:24
+msgid "Company name"
+msgstr ""
+
+#: apps/company/forms.py:25
+msgid "VAT number"
+msgstr ""
+
+#: apps/company/forms.py:26
+msgid "Registration number"
+msgstr ""
+
+#: apps/company/forms.py:27
+msgid "Address line 1"
+msgstr ""
+
+#: apps/company/forms.py:28
+msgid "Address line 2"
+msgstr ""
+
+#: apps/company/forms.py:29
+msgid "City"
+msgstr ""
+
+#: apps/company/forms.py:30
+msgid "Postal code"
+msgstr ""
+
+#: apps/company/forms.py:31
+msgid "Country"
+msgstr ""
+
+#: apps/company/forms.py:33 templates/registration/password_reset_form.html:12
+msgid "Email"
+msgstr ""
+
+#: apps/company/forms.py:34
+msgid "Company logo"
+msgstr ""
+
+#: apps/company/forms.py:45
+msgid "Logo must be PNG, JPEG, or WEBP."
+msgstr ""
+
+#: apps/company/forms.py:49
+msgid "Logo must be 5 MB or smaller."
+msgstr ""
+
+#: apps/company/templates/company/company_profile.html:6
+msgid "Main Company Profile"
+msgstr ""
+
+#: apps/company/templates/company/company_profile.html:7
+msgid "Issuer details reused across all offers."
+msgstr ""
+
+#: apps/company/templates/company/company_profile.html:76
+msgid "Allowed: PNG/JPEG/WEBP up to 5 MB."
+msgstr ""
+
+#: apps/company/templates/company/company_profile.html:81
+msgid "Current logo"
+msgstr ""
+
+#: apps/company/templates/company/company_profile.html:82
+msgid "Current company logo"
+msgstr ""
+
+#: apps/company/templates/company/company_profile.html:88
+msgid "Save profile"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:8 templates/base.html:105
+msgid "Offers"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:9
+msgid "Newest first. Empty drafts with no details are hidden."
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:12
+msgid "Issuer:"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:16
+msgid "No company profile yet."
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:17
+msgid "Set up profile"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:31
+#: apps/offers/templates/offers/offer_detail.html:8
+#, python-format
+msgid "Offer #%(n)s"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:34
+msgid "Draft"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:38
+#, python-format
+msgid "1 line · updated %(d)s"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:40
+#, python-format
+msgid "%(c)s lines · updated %(d)s"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:45
+msgid "View"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:53
+msgid "No offers to show yet."
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:53
+msgid "Create an offer"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:53
+msgid "or save header details / add a line so a draft appears here."
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:58
+msgid "Pagination"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:59
+#, python-format
+msgid "Page %(p)s of %(t)s"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:62
+msgid "Previous"
+msgstr ""
+
+#: apps/offers/templates/offers/dashboard.html:65
+msgid "Next"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:9
+msgid "Issuer"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:13
+msgid "All offers"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:14
+msgid "Dashboard"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:21
+msgid "Recent offers"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:32
+msgid "No other offers yet."
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:38
+msgid "Product catalog"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:40
+msgid "Search products"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:41 apps/offers/views.py:198
+msgid "Search (min. 3 characters)…"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:49
+#: apps/offers/templates/offers/offer_create.html:118
+#: apps/offers/templates/offers/offer_create.html:122
+#: apps/offers/templates/offers/offer_create.html:126
+#: apps/offers/templates/offers/offer_detail.html:61
+#: apps/offers/templates/offers/offer_detail.html:76
+#: apps/offers/templates/offers/offer_detail.html:80
+#: apps/offers/templates/offers/offer_detail.html:84 apps/offers/views.py:197
+msgid "BGN"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:51
+msgid "Add to offer"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:54
+msgid "No catalog items."
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:61 templates/base.html:106
+msgid "New offer"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:62
+msgid ""
+"Line items save automatically when you add or edit rows. Click Save offer to "
+"store client and offer details (this creates the offer if it does not exist "
+"yet)."
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:67
+#: apps/offers/templates/offers/offer_detail.html:23
+msgid "Client"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:68 apps/offers/views.py:199
+msgid "Type to search or enter a new name…"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:72
+#: apps/offers/templates/offers/offer_detail.html:27
+msgid "Site address"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:76
+#: apps/offers/templates/offers/offer_detail.html:31
+msgid "Offer date"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:80
+#: apps/offers/templates/offers/offer_detail.html:35
+msgid "Validity"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:89
+msgid "Save offer"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:92
+#: apps/offers/templates/offers/offer_detail.html:16
+msgid "Download PDF"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:101
+#: apps/offers/templates/offers/offer_detail.html:45 apps/pdf/offer_pdf.py:204
+#: apps/products/forms.py:15
+msgid "Description"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:102
+#: apps/offers/templates/offers/offer_detail.html:46 apps/pdf/offer_pdf.py:205
+msgid "Qty"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:103
+#: apps/offers/templates/offers/offer_detail.html:48 apps/pdf/offer_pdf.py:207
+msgid "Unit price"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:104
+#: apps/offers/templates/offers/offer_create.html:121
+#: apps/offers/templates/offers/offer_detail.html:49
+#: apps/offers/templates/offers/offer_detail.html:79 apps/pdf/offer_pdf.py:208
+#: apps/pdf/offer_pdf.py:210 apps/pdf/offer_pdf.py:255
+msgid "VAT"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:105
+#: apps/offers/templates/offers/offer_create.html:125
+#: apps/offers/templates/offers/offer_detail.html:83 apps/pdf/offer_pdf.py:211
+msgid "Total"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:111 apps/offers/views.py:194
+msgid "No lines yet. Add a product from the catalog."
+msgstr ""
+
+#: apps/offers/templates/offers/offer_create.html:117
+#: apps/offers/templates/offers/offer_detail.html:75 apps/pdf/offer_pdf.py:254
+msgid "Subtotal (ex VAT)"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_detail.html:9
+msgid "Read-only summary"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_detail.html:13
+msgid "Open in builder"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_detail.html:24
+#: apps/offers/templates/offers/offer_detail.html:28
+#: apps/offers/templates/offers/offer_detail.html:32
+#: apps/offers/templates/offers/offer_detail.html:36 apps/offers/views.py:183
+msgid "—"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_detail.html:41 apps/pdf/offer_pdf.py:201
+msgid "Line items"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_detail.html:47 apps/pdf/offer_pdf.py:206
+#: apps/products/forms.py:16
+msgid "Unit"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_detail.html:50
+msgid "Line total"
+msgstr ""
+
+#: apps/offers/templates/offers/offer_detail.html:65
+msgid "No line items."
+msgstr ""
+
+#: apps/offers/views.py:184
+msgid "7 days"
+msgstr ""
+
+#: apps/offers/views.py:185
+msgid "14 days"
+msgstr ""
+
+#: apps/offers/views.py:186
+msgid "30 days"
+msgstr ""
+
+#: apps/offers/views.py:187
+msgid "60 days"
+msgstr ""
+
+#: apps/offers/views.py:190
+msgid "Saved."
+msgstr ""
+
+#: apps/offers/views.py:191
+msgid "Could not start offer."
+msgstr ""
+
+#: apps/offers/views.py:192
+msgid "Save failed."
+msgstr ""
+
+#: apps/offers/views.py:193
+msgid "Request failed."
+msgstr ""
+
+#: apps/offers/views.py:195
+msgid "Validation error."
+msgstr ""
+
+#: apps/offers/views.py:196
+msgid "Remove line"
+msgstr ""
+
+#: apps/pdf/offer_pdf.py:85
+#, python-format
+msgid "Offer %(id)s"
+msgstr ""
+
+#: apps/pdf/offer_pdf.py:185
+msgid "Offer"
+msgstr ""
+
+#: apps/pdf/offer_pdf.py:186
+#, python-format
+msgid "Offer #%(id)s"
+msgstr ""
+
+#: apps/pdf/offer_pdf.py:198
+msgid "Details"
+msgstr ""
+
+#: apps/pdf/offer_pdf.py:209
+msgid "Net"
+msgstr ""
+
+#: apps/pdf/offer_pdf.py:252
+msgid "Totals"
+msgstr ""
+
+#: apps/pdf/offer_pdf.py:256
+msgid "Total (incl. VAT)"
+msgstr ""
+
+#: apps/products/forms.py:14
+msgid "Name"
+msgstr ""
+
+#: apps/products/forms.py:17
+msgid "Base price"
+msgstr ""
+
+#: apps/products/forms.py:18
+msgid "VAT rate (%)"
+msgstr ""
+
+#: apps/products/forms.py:37
+msgid "Base price cannot be negative."
+msgstr ""
+
+#: apps/products/forms.py:45
+msgid "VAT rate must be between 0 and 100."
+msgstr ""
+
+#: apps/products/templates/products/catalog_form.html:7
+msgid ""
+"Choose a unit (piece, m², or m). Final price is base price times one plus "
+"VAT over 100, rounded to two decimals."
+msgstr ""
+
+#: apps/products/templates/products/catalog_form.html:44
+msgid "Current final price (computed):"
+msgstr ""
+
+#: apps/products/templates/products/catalog_list.html:8
+msgid "Product / service catalog"
+msgstr ""
+
+#: apps/products/templates/products/catalog_list.html:9
+msgid "Base price, VAT rate, and computed final price per unit."
+msgstr ""
+
+#: apps/products/templates/products/catalog_list.html:12
+msgid "Add item"
+msgstr ""
+
+#: apps/products/templates/products/catalog_list.html:27
+msgid "Unit:"
+msgstr ""
+
+#: apps/products/templates/products/catalog_list.html:28
+msgid "Base:"
+msgstr ""
+
+#: apps/products/templates/products/catalog_list.html:29
+msgid "VAT:"
+msgstr ""
+
+#: apps/products/templates/products/catalog_list.html:30
+msgid "Final:"
+msgstr ""
+
+#: apps/products/templates/products/catalog_list.html:37
+msgid ""
+"Delete this catalog item? This cannot be undone if the item is not used on "
+"any offer."
+msgstr ""
+
+#: apps/products/templates/products/catalog_list.html:48
+msgid "No catalog items yet."
+msgstr ""
+
+#: apps/products/templates/products/catalog_list.html:48
+msgid "Add your first item"
+msgstr ""
+
+#: apps/products/views.py:60
+#, python-format
+msgid "Cannot delete \"%(name)s\" because it is used on one or more offers."
+msgstr ""
+
+#: apps/products/views.py:64
+#, python-format
+msgid "Catalog item \"%(name)s\" was deleted."
+msgstr ""
+
+#: templates/base.html:7 templates/base.html:102
+msgid "Offer Builder"
+msgstr ""
+
+#: templates/base.html:107
+msgid "Clients"
+msgstr ""
+
+#: templates/base.html:108
+msgid "Catalog"
+msgstr ""
+
+#: templates/base.html:109
+msgid "Company"
+msgstr ""
+
+#: templates/base.html:113
+msgid "Logout"
+msgstr ""
+
+#: templates/partials/language_switcher.html:7
+msgid "Bulgarian"
+msgstr ""
+
+#: templates/partials/language_switcher.html:14
+msgid "English"
+msgstr ""
+
+#: templates/registration/login.html:6
+msgid "Operator login"
+msgstr ""
+
+#: templates/registration/login.html:7
+msgid "Sign in to manage offers and products/services."
+msgstr ""
+
+#: templates/registration/login.html:11
+msgid "Please enter a correct username and password."
+msgstr ""
+
+#: templates/registration/login.html:18
+msgid "Username"
+msgstr ""
+
+#: templates/registration/login.html:22
+msgid "Password"
+msgstr ""
+
+#: templates/registration/login.html:26
+msgid "Sign in"
+msgstr ""
+
+#: templates/registration/login.html:32
+msgid "Forgot password?"
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:6
+msgid "Password updated"
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:7
+msgid "Your password has been changed successfully."
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:8
+msgid "Sign in now"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:6
+msgid "Set a new password"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:12
+msgid "Save new password"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:17
+msgid "This reset link is invalid or has already been used."
+msgstr ""
+
+#: templates/registration/password_reset_done.html:6
+msgid "Check your email"
+msgstr ""
+
+#: templates/registration/password_reset_done.html:8
+msgid ""
+"If an account exists for that email, we sent instructions to reset your "
+"password."
+msgstr ""
+
+#: templates/registration/password_reset_done.html:10
+msgid "Back to login"
+msgstr ""
+
+#: templates/registration/password_reset_form.html:6
+msgid "Reset your password"
+msgstr ""
+
+#: templates/registration/password_reset_form.html:7
+msgid "Enter your operator email to receive a reset link."
+msgstr ""
+
+#: templates/registration/password_reset_form.html:16
+msgid "Send reset link"
+msgstr ""

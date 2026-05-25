@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+.env.*
+!.env.example
+
+# IDE / tooling
+.idea/
+.vscode/
+.cursor/
+.claude/
+.kiro/
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.cache/
+
+# Agent / AI working dirs
+agent-os/
+
+# Coverage
+htmlcov/
+.coverage
+coverage.xml
+coverage/
+
+# Media uploads (user-generated, not versioned)
+media/
+
+# DB
+*.sqlite3
+test_db.sqlite3
+
+# Build artifacts
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Lock file (uv-managed, large)
+uv.lock

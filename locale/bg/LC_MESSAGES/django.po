@@ -1,0 +1,777 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-05 13:47+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps/clients/forms.py:12
+msgid "Client name"
+msgstr "Име на клиент"
+
+#: apps/clients/forms.py:13
+msgid "Address"
+msgstr "Адрес"
+
+#: apps/clients/forms.py:14 apps/company/forms.py:32
+msgid "Phone"
+msgstr "Телефон"
+
+#: apps/clients/forms.py:20 apps/products/forms.py:65
+#: apps/products/forms.py:71 apps/products/forms.py:79
+#: apps/products/forms.py:97
+msgid "This field is required."
+msgstr "Това поле е задължително."
+
+#: apps/clients/templates/clients/client_form.html:7
+msgid "Only the client name is required."
+msgstr "Задължително е само името на клиента."
+
+#: apps/clients/templates/clients/client_form.html:41
+#: apps/products/templates/products/catalog_form.html:60
+#: apps/products/templates/products/unit_form.html:35
+msgid "Cancel"
+msgstr "Отказ"
+
+#: apps/clients/templates/clients/client_list.html:8
+msgid "Client companies"
+msgstr "Клиентски фирми"
+
+#: apps/clients/templates/clients/client_list.html:9
+msgid "Recipients you prepare offers for."
+msgstr "Получатели, за които подготвяте оферти."
+
+#: apps/clients/templates/clients/client_list.html:12
+msgid "Add client"
+msgstr "Добави клиент"
+
+#: apps/clients/templates/clients/client_list.html:32
+#: apps/products/templates/products/catalog_list.html:35
+#: apps/products/templates/products/unit_list.html:30
+msgid "Edit"
+msgstr "Редакция"
+
+#: apps/clients/templates/clients/client_list.html:34
+msgid ""
+"Delete this client? Offers that used them will keep their other data; the "
+"client link will be cleared."
+msgstr ""
+"Изтриване на този клиент? Офертите, които са го ползвали, запазват "
+"останалите данни; връзката към клиента се изчиства."
+
+#: apps/clients/templates/clients/client_list.html:36
+#: apps/products/templates/products/catalog_list.html:39
+#: apps/products/templates/products/unit_list.html:34
+msgid "Delete"
+msgstr "Изтриване"
+
+#: apps/clients/templates/clients/client_list.html:45
+msgid "No clients yet."
+msgstr "Все още няма клиенти."
+
+#: apps/clients/templates/clients/client_list.html:45
+msgid "Add your first client"
+msgstr "Добави първи клиент"
+
+#: apps/clients/templates/clients/client_list.html:50
+#: apps/offers/templates/offers/offer_detail.html:90
+#: apps/products/templates/products/catalog_list.html:53
+msgid "Back to offers"
+msgstr "Към офертите"
+
+#: apps/clients/views.py:52
+#, python-format
+msgid "Client \"%(name)s\" was deleted."
+msgstr "Клиентът \"%(name)s\" беше изтрит."
+
+#: apps/company/forms.py:24
+msgid "Company name"
+msgstr "Име на фирмата"
+
+#: apps/company/forms.py:25
+msgid "VAT number"
+msgstr "ДДС номер"
+
+#: apps/company/forms.py:26
+msgid "Registration number"
+msgstr "ЕИК / регистрационен номер"
+
+#: apps/company/forms.py:27
+msgid "Address line 1"
+msgstr "Адрес, ред 1"
+
+#: apps/company/forms.py:28
+msgid "Address line 2"
+msgstr "Адрес, ред 2"
+
+#: apps/company/forms.py:29
+msgid "City"
+msgstr "Град"
+
+#: apps/company/forms.py:30
+msgid "Postal code"
+msgstr "Пощенски код"
+
+#: apps/company/forms.py:31
+msgid "Country"
+msgstr "Държава"
+
+#: apps/company/forms.py:33 templates/registration/password_reset_form.html:12
+msgid "Email"
+msgstr "Имейл"
+
+#: apps/company/forms.py:34
+msgid "Company logo"
+msgstr "Лого на фирмата"
+
+#: apps/company/forms.py:45
+msgid "Logo must be PNG, JPEG, or WEBP."
+msgstr "Логото трябва да е PNG, JPEG или WEBP."
+
+#: apps/company/forms.py:49
+msgid "Logo must be 5 MB or smaller."
+msgstr "Логото трябва да е до 5 MB."
+
+#: apps/company/templates/company/company_profile.html:6
+msgid "Main Company Profile"
+msgstr "Основен фирмен профил"
+
+#: apps/company/templates/company/company_profile.html:7
+msgid "Issuer details reused across all offers."
+msgstr "Данни за издателя, ползвани във всички оферти."
+
+#: apps/company/templates/company/company_profile.html:76
+msgid "Allowed: PNG/JPEG/WEBP up to 5 MB."
+msgstr "Позволено: PNG/JPEG/WEBP до 5 MB."
+
+#: apps/company/templates/company/company_profile.html:81
+msgid "Current logo"
+msgstr "Текущо лого"
+
+#: apps/company/templates/company/company_profile.html:82
+msgid "Current company logo"
+msgstr "Текущо лого на фирмата"
+
+#: apps/company/templates/company/company_profile.html:88
+msgid "Save profile"
+msgstr "Запази профил"
+
+#: apps/offers/templates/offers/dashboard.html:8 templates/base.html:105
+msgid "Offers"
+msgstr "Оферти"
+
+#: apps/offers/templates/offers/dashboard.html:9
+msgid "Newest first. Empty drafts with no details are hidden."
+msgstr "Първо най-новите. Празни чернови без данни са скрити."
+
+#: apps/offers/templates/offers/dashboard.html:12
+msgid "Issuer:"
+msgstr "Издател:"
+
+#: apps/offers/templates/offers/dashboard.html:16
+msgid "No company profile yet."
+msgstr "Все още няма фирмен профил."
+
+#: apps/offers/templates/offers/dashboard.html:17
+msgid "Set up profile"
+msgstr "Настрой профил"
+
+#: apps/offers/templates/offers/dashboard.html:31
+#: apps/offers/templates/offers/offer_detail.html:8
+#, python-format
+msgid "Offer #%(n)s"
+msgstr "Оферта №%(n)s"
+
+#: apps/offers/templates/offers/dashboard.html:34
+msgid "Draft"
+msgstr "Чернова"
+
+#: apps/offers/templates/offers/dashboard.html:38
+#, python-format
+msgid "1 line · updated %(d)s"
+msgstr "1 ред · обновена %(d)s"
+
+#: apps/offers/templates/offers/dashboard.html:40
+#, python-format
+msgid "%(c)s lines · updated %(d)s"
+msgstr "%(c)s реда · обновена %(d)s"
+
+#: apps/offers/templates/offers/dashboard.html:45
+msgid "View"
+msgstr "Преглед"
+
+#: apps/offers/templates/offers/dashboard.html:53
+msgid "No offers to show yet."
+msgstr "Все още няма оферти за показване."
+
+#: apps/offers/templates/offers/dashboard.html:53
+msgid "Create an offer"
+msgstr "Създай оферта"
+
+#: apps/offers/templates/offers/dashboard.html:53
+msgid "or save header details / add a line so a draft appears here."
+msgstr ""
+"или запази данните в заглавката / добави ред, за да се появи чернова тук."
+
+#: apps/offers/templates/offers/dashboard.html:58
+msgid "Pagination"
+msgstr "Страниране"
+
+#: apps/offers/templates/offers/dashboard.html:59
+#, python-format
+msgid "Page %(p)s of %(t)s"
+msgstr "Страница %(p)s от %(t)s"
+
+#: apps/offers/templates/offers/dashboard.html:62
+msgid "Previous"
+msgstr "Предишна"
+
+#: apps/offers/templates/offers/dashboard.html:65
+msgid "Next"
+msgstr "Следваща"
+
+#: apps/offers/templates/offers/offer_create.html:9
+msgid "Issuer"
+msgstr "Издател"
+
+#: apps/offers/templates/offers/offer_create.html:13
+msgid "All offers"
+msgstr "Всички оферти"
+
+#: apps/offers/templates/offers/offer_create.html:14
+msgid "Dashboard"
+msgstr "Табло"
+
+#: apps/offers/templates/offers/offer_create.html:21
+msgid "Recent offers"
+msgstr "Скорошни оферти"
+
+#: apps/offers/templates/offers/offer_create.html:32
+msgid "No other offers yet."
+msgstr "Все още няма други оферти."
+
+#: apps/offers/templates/offers/offer_create.html:38
+msgid "Product catalog"
+msgstr "Каталог продукти"
+
+#: apps/offers/templates/offers/offer_create.html:40
+msgid "Search products"
+msgstr "Търсене на продукти"
+
+#: apps/offers/templates/offers/offer_create.html:41 apps/offers/views.py:198
+msgid "Search (min. 3 characters)…"
+msgstr "Търсене (минимум 3 знака)…"
+
+#: apps/offers/templates/offers/offer_create.html:49
+#: apps/offers/templates/offers/offer_create.html:118
+#: apps/offers/templates/offers/offer_create.html:122
+#: apps/offers/templates/offers/offer_create.html:126
+#: apps/offers/templates/offers/offer_detail.html:61
+#: apps/offers/templates/offers/offer_detail.html:76
+#: apps/offers/templates/offers/offer_detail.html:80
+#: apps/offers/templates/offers/offer_detail.html:84 apps/offers/views.py:197
+msgid "BGN"
+msgstr "лв."
+
+#: apps/offers/templates/offers/offer_create.html:51
+msgid "Add to offer"
+msgstr "Добави към офертата"
+
+#: apps/offers/templates/offers/offer_create.html:54
+msgid "No catalog items."
+msgstr "Няма артикули в каталога."
+
+#: apps/offers/templates/offers/offer_create.html:61 templates/base.html:106
+msgid "New offer"
+msgstr "Нова оферта"
+
+#: apps/offers/templates/offers/offer_create.html:62
+msgid ""
+"Line items save automatically when you add or edit rows. Click Save offer to"
+" store client and offer details (this creates the offer if it does not exist"
+" yet)."
+msgstr ""
+"Редовете се записват автоматично при добавяне или редакция. Натисни „Запази "
+"оферта“, за да запазиш клиент и данни за офертата (създава офертата, ако още"
+" не съществува)."
+
+#: apps/offers/templates/offers/offer_create.html:67
+#: apps/offers/templates/offers/offer_detail.html:23
+msgid "Client"
+msgstr "Клиент"
+
+#: apps/offers/templates/offers/offer_create.html:68 apps/offers/views.py:199
+msgid "Type to search or enter a new name…"
+msgstr "Търси или въведи ново име…"
+
+#: apps/offers/templates/offers/offer_create.html:72
+#: apps/offers/templates/offers/offer_detail.html:27
+msgid "Site address"
+msgstr "Адрес на обекта"
+
+#: apps/offers/templates/offers/offer_create.html:76
+#: apps/offers/templates/offers/offer_detail.html:31
+msgid "Offer date"
+msgstr "Дата на офертата"
+
+#: apps/offers/templates/offers/offer_create.html:80
+#: apps/offers/templates/offers/offer_detail.html:35
+msgid "Validity"
+msgstr "Валидност"
+
+#: apps/offers/templates/offers/offer_create.html:89
+msgid "Save offer"
+msgstr "Запази оферта"
+
+#: apps/offers/templates/offers/offer_create.html:92
+#: apps/offers/templates/offers/offer_detail.html:16
+msgid "Download PDF"
+msgstr "Изтегли PDF"
+
+#: apps/offers/templates/offers/offer_create.html:101
+#: apps/offers/templates/offers/offer_detail.html:45 apps/pdf/offer_pdf.py:204
+#: apps/products/forms.py:51
+msgid "Description"
+msgstr "Описание"
+
+#: apps/offers/templates/offers/offer_create.html:102
+#: apps/offers/templates/offers/offer_detail.html:46 apps/pdf/offer_pdf.py:205
+msgid "Qty"
+msgstr "Кол."
+
+#: apps/offers/templates/offers/offer_create.html:103
+#: apps/offers/templates/offers/offer_detail.html:48 apps/pdf/offer_pdf.py:207
+msgid "Unit price"
+msgstr "Ед. цена"
+
+#: apps/offers/templates/offers/offer_create.html:104
+#: apps/offers/templates/offers/offer_create.html:121
+#: apps/offers/templates/offers/offer_detail.html:49
+#: apps/offers/templates/offers/offer_detail.html:79 apps/pdf/offer_pdf.py:208
+#: apps/pdf/offer_pdf.py:210 apps/pdf/offer_pdf.py:255
+msgid "VAT"
+msgstr "ДДС"
+
+#: apps/offers/templates/offers/offer_create.html:105
+#: apps/offers/templates/offers/offer_create.html:125
+#: apps/offers/templates/offers/offer_detail.html:83 apps/pdf/offer_pdf.py:211
+msgid "Total"
+msgstr "Общо"
+
+#: apps/offers/templates/offers/offer_create.html:111 apps/offers/views.py:194
+msgid "No lines yet. Add a product from the catalog."
+msgstr "Все още няма редове. Добави продукт от каталога."
+
+#: apps/offers/templates/offers/offer_create.html:117
+#: apps/offers/templates/offers/offer_detail.html:75 apps/pdf/offer_pdf.py:254
+msgid "Subtotal (ex VAT)"
+msgstr "Сума без ДДС"
+
+#: apps/offers/templates/offers/offer_detail.html:9
+msgid "Read-only summary"
+msgstr "Обобщение (само за четене)"
+
+#: apps/offers/templates/offers/offer_detail.html:13
+msgid "Open in builder"
+msgstr "Отвори в редактора"
+
+#: apps/offers/templates/offers/offer_detail.html:24
+#: apps/offers/templates/offers/offer_detail.html:28
+#: apps/offers/templates/offers/offer_detail.html:32
+#: apps/offers/templates/offers/offer_detail.html:36 apps/offers/views.py:183
+msgid "—"
+msgstr "—"
+
+#: apps/offers/templates/offers/offer_detail.html:41 apps/pdf/offer_pdf.py:201
+msgid "Line items"
+msgstr "Редове"
+
+#: apps/offers/templates/offers/offer_detail.html:47 apps/pdf/offer_pdf.py:206
+#: apps/products/forms.py:52
+msgid "Unit"
+msgstr "Мярка"
+
+#: apps/offers/templates/offers/offer_detail.html:50
+msgid "Line total"
+msgstr "Ред общо"
+
+#: apps/offers/templates/offers/offer_detail.html:65
+msgid "No line items."
+msgstr "Няма редове."
+
+#: apps/offers/views.py:184
+msgid "7 days"
+msgstr "7 дни"
+
+#: apps/offers/views.py:185
+msgid "14 days"
+msgstr "14 дни"
+
+#: apps/offers/views.py:186
+msgid "30 days"
+msgstr "30 дни"
+
+#: apps/offers/views.py:187
+msgid "60 days"
+msgstr "60 дни"
+
+#: apps/offers/views.py:190
+msgid "Saved."
+msgstr "Запазено."
+
+#: apps/offers/views.py:191
+msgid "Could not start offer."
+msgstr "Неуспешно стартиране на оферта."
+
+#: apps/offers/views.py:192
+msgid "Save failed."
+msgstr "Запазването не бе успешно."
+
+#: apps/offers/views.py:193
+msgid "Request failed."
+msgstr "Заявката не бе успешна."
+
+#: apps/offers/views.py:195
+msgid "Validation error."
+msgstr "Грешка при валидация."
+
+#: apps/offers/views.py:196
+msgid "Remove line"
+msgstr "Премахни ред"
+
+#: apps/pdf/offer_pdf.py:85
+#, python-format
+msgid "Offer %(id)s"
+msgstr "Оферта %(id)s"
+
+#: apps/pdf/offer_pdf.py:185
+msgid "Offer"
+msgstr "Оферта"
+
+#: apps/pdf/offer_pdf.py:186
+#, python-format
+msgid "Offer #%(id)s"
+msgstr "Оферта №%(id)s"
+
+#: apps/pdf/offer_pdf.py:198
+msgid "Details"
+msgstr "Данни"
+
+#: apps/pdf/offer_pdf.py:209
+msgid "Net"
+msgstr "Нето"
+
+#: apps/pdf/offer_pdf.py:252
+msgid "Totals"
+msgstr "Обобщение"
+
+#: apps/pdf/offer_pdf.py:256
+msgid "Total (incl. VAT)"
+msgstr "Обща сума (с ДДС)"
+
+#: apps/products/forms.py:50
+msgid "Name"
+msgstr "Име"
+
+#: apps/products/forms.py:53
+msgid "Base price"
+msgstr "Базова цена"
+
+#: apps/products/forms.py:54
+msgid "VAT rate (%)"
+msgstr "ДДС ставка (%)"
+
+#: apps/products/forms.py:73
+msgid "Base price cannot be negative."
+msgstr "Базовата цена не може да е отрицателна."
+
+#: apps/products/forms.py:81
+msgid "VAT rate must be between 0 and 100."
+msgstr "ДДС ставката трябва да е между 0 и 100."
+
+#: apps/products/forms.py:90
+msgid "Label (Bulgarian)"
+msgstr "Име (на български)"
+
+#: apps/products/forms.py:91
+msgid "Sort order"
+msgstr "Ред на показване"
+
+#: apps/products/templates/products/catalog_form.html:7
+msgid ""
+"Choose a unit (piece, m², or m). Final price is base price times one plus "
+"VAT over 100, rounded to two decimals."
+msgstr ""
+"Изберете мярка (брой, м² или м). Крайната цена е базовата цена по (1 + "
+"ДДС/100), закръглена до втори знак."
+
+#: apps/products/templates/products/catalog_form.html:44
+msgid "Current final price (computed):"
+msgstr "Текуща крайна цена (изчислена):"
+
+#: apps/products/templates/products/catalog_list.html:8
+msgid "Product / service catalog"
+msgstr "Каталог продукти / услуги"
+
+#: apps/products/templates/products/catalog_list.html:9
+msgid "Base price, VAT rate, and computed final price per unit."
+msgstr "Базова цена, ставка на ДДС и изчислена крайна цена за единица."
+
+#: apps/products/templates/products/catalog_list.html:12
+msgid "Add item"
+msgstr "Добави артикул"
+
+#: apps/products/templates/products/catalog_list.html:27
+msgid "Unit:"
+msgstr "Мярка:"
+
+#: apps/products/templates/products/catalog_list.html:28
+msgid "Base:"
+msgstr "База:"
+
+#: apps/products/templates/products/catalog_list.html:29
+msgid "VAT:"
+msgstr "ДДС:"
+
+#: apps/products/templates/products/catalog_list.html:30
+msgid "Final:"
+msgstr "Крайна:"
+
+#: apps/products/templates/products/catalog_list.html:37
+msgid ""
+"Delete this catalog item? This cannot be undone if the item is not used on "
+"any offer."
+msgstr ""
+"Изтриване на този артикул от каталога? Не може да се отмени, ако артикулът "
+"не се ползва в оферта."
+
+#: apps/products/templates/products/catalog_list.html:48
+msgid "No catalog items yet."
+msgstr "Все още няма артикули в каталога."
+
+#: apps/products/templates/products/catalog_list.html:48
+msgid "Add your first item"
+msgstr "Добави първи артикул"
+
+#: apps/products/templates/products/unit_form.html:7
+msgid "Set a unit label and display order. Code is generated automatically."
+msgstr ""
+"Задай име на мерната единица и ред на показване. Кодът се генерира "
+"автоматично."
+
+#: apps/products/templates/products/unit_list.html:8 templates/base.html:109
+msgid "Units"
+msgstr "Мерни единици"
+
+#: apps/products/templates/products/unit_list.html:9
+msgid "Manage measurement units used in product catalog items."
+msgstr "Управлявай мерните единици, използвани в артикулите от каталога."
+
+#: apps/products/templates/products/unit_list.html:12
+#: apps/products/views.py:81
+msgid "Add unit"
+msgstr "Добави мерна единица"
+
+#: apps/products/templates/products/unit_list.html:24
+msgid "Code:"
+msgstr "Код:"
+
+#: apps/products/templates/products/unit_list.html:25
+msgid "Sort:"
+msgstr "Ред:"
+
+#: apps/products/templates/products/unit_list.html:32
+msgid ""
+"Delete this unit? This cannot be undone if the unit is not used by any "
+"catalog item."
+msgstr ""
+"Изтриване на тази мерна единица? Не може да се отмени, ако единицата не се "
+"използва в артикул от каталога."
+
+#: apps/products/templates/products/unit_list.html:43
+msgid "No units yet."
+msgstr "Все още няма мерни единици."
+
+#: apps/products/templates/products/unit_list.html:43
+msgid "Add your first unit"
+msgstr "Добави първа мерна единица"
+
+#: apps/products/templates/products/unit_list.html:48
+msgid "Back to catalog"
+msgstr "Към каталога"
+
+#: apps/products/views.py:32
+msgid "Add catalog item"
+msgstr "Добави артикул в каталога"
+
+#: apps/products/views.py:33 apps/products/views.py:82
+msgid "Create"
+msgstr "Създай"
+
+#: apps/products/views.py:45
+msgid "Edit catalog item"
+msgstr "Редакция на артикул"
+
+#: apps/products/views.py:46 apps/products/views.py:103
+msgid "Save"
+msgstr "Запази"
+
+#: apps/products/views.py:59
+#, python-format
+msgid "Cannot delete \"%(name)s\" because it is used on one or more offers."
+msgstr ""
+"Не може да се изтрие „%(name)s“, защото се използва в една или повече "
+"оферти."
+
+#: apps/products/views.py:63
+#, python-format
+msgid "Catalog item \"%(name)s\" was deleted."
+msgstr "Артикулът „%(name)s“ беше изтрит."
+
+#: apps/products/views.py:89
+#, python-format
+msgid "Unit \"%(name)s\" was created."
+msgstr "Мерната единица \"%(name)s\" е създадена."
+
+#: apps/products/views.py:102
+msgid "Edit unit"
+msgstr "Редакция на мерна единица"
+
+#: apps/products/views.py:110
+#, python-format
+msgid "Unit \"%(name)s\" was updated."
+msgstr "Мерната единица \"%(name)s\" е обновена."
+
+#: apps/products/views.py:124
+#, python-format
+msgid ""
+"Cannot delete unit \"%(name)s\" because it is used by one or more catalog "
+"items."
+msgstr ""
+"Не може да се изтрие мерната единица \"%(name)s\", защото се използва в един"
+" или повече артикули от каталога."
+
+#: apps/products/views.py:128
+#, python-format
+msgid "Unit \"%(name)s\" was deleted."
+msgstr "Мерната единица \"%(name)s\" беше изтрита."
+
+#: templates/base.html:7 templates/base.html:102
+msgid "Offer Builder"
+msgstr "Конструктор на оферти"
+
+#: templates/base.html:107
+msgid "Clients"
+msgstr "Клиенти"
+
+#: templates/base.html:108
+msgid "Catalog"
+msgstr "Каталог"
+
+#: templates/base.html:110
+msgid "Company"
+msgstr "Фирма"
+
+#: templates/base.html:114
+msgid "Logout"
+msgstr "Изход"
+
+#: templates/partials/language_switcher.html:7
+msgid "Bulgarian"
+msgstr "Български"
+
+#: templates/partials/language_switcher.html:14
+msgid "English"
+msgstr "Английски"
+
+#: templates/registration/login.html:6
+msgid "Operator login"
+msgstr "Вход за оператор"
+
+#: templates/registration/login.html:7
+msgid "Sign in to manage offers and products/services."
+msgstr "Влезте, за да управлявате оферти и продукти/услуги."
+
+#: templates/registration/login.html:11
+msgid "Please enter a correct username and password."
+msgstr "Въведете коректно потребителско име и парола."
+
+#: templates/registration/login.html:18
+msgid "Username"
+msgstr "Потребителско име"
+
+#: templates/registration/login.html:22
+msgid "Password"
+msgstr "Парола"
+
+#: templates/registration/login.html:26
+msgid "Sign in"
+msgstr "Вход"
+
+#: templates/registration/login.html:32
+msgid "Forgot password?"
+msgstr "Забравена парола?"
+
+#: templates/registration/password_reset_complete.html:6
+msgid "Password updated"
+msgstr "Паролата е обновена"
+
+#: templates/registration/password_reset_complete.html:7
+msgid "Your password has been changed successfully."
+msgstr "Паролата ви беше променена успешно."
+
+#: templates/registration/password_reset_complete.html:8
+msgid "Sign in now"
+msgstr "Влез сега"
+
+#: templates/registration/password_reset_confirm.html:6
+msgid "Set a new password"
+msgstr "Задай нова парола"
+
+#: templates/registration/password_reset_confirm.html:12
+msgid "Save new password"
+msgstr "Запази новата парола"
+
+#: templates/registration/password_reset_confirm.html:17
+msgid "This reset link is invalid or has already been used."
+msgstr "Този линк е невалиден или вече е използван."
+
+#: templates/registration/password_reset_done.html:6
+msgid "Check your email"
+msgstr "Проверете имейла"
+
+#: templates/registration/password_reset_done.html:8
+msgid ""
+"If an account exists for that email, we sent instructions to reset your "
+"password."
+msgstr ""
+"Ако има акаунт за този имейл, изпратихме инструкции за нулиране на паролата."
+
+#: templates/registration/password_reset_done.html:10
+msgid "Back to login"
+msgstr "Към входа"
+
+#: templates/registration/password_reset_form.html:6
+msgid "Reset your password"
+msgstr "Нулиране на парола"
+
+#: templates/registration/password_reset_form.html:7
+msgid "Enter your operator email to receive a reset link."
+msgstr "Въведете имейла на оператора, за да получите линк за нулиране."
+
+#: templates/registration/password_reset_form.html:16
+msgid "Send reset link"
+msgstr "Изпрати линк"

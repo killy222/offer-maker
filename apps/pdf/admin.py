@@ -1,0 +1,1 @@
+# PDF domain admin placeholder.

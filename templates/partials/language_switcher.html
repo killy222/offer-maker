@@ -1,0 +1,16 @@
+{% load i18n %}
+<div class="flex flex-wrap items-center gap-1 text-sm font-medium">
+    <form method="post" action="{% url 'set_language' %}" class="inline m-0">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+        <input type="hidden" name="language" value="bg" />
+        <button type="submit" class="rounded-ob px-2.5 py-1.5 text-ob-muted hover:bg-ob-peach50 hover:text-ob-ink {% if LANGUAGE_CODE == 'bg' %}font-bold text-ob-peach800{% endif %}" title="{% trans 'Bulgarian' %}">BG</button>
+    </form>
+    <span class="text-ob-peach200" aria-hidden="true">|</span>
+    <form method="post" action="{% url 'set_language' %}" class="inline m-0">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+        <input type="hidden" name="language" value="en" />
+        <button type="submit" class="rounded-ob px-2.5 py-1.5 text-ob-muted hover:bg-ob-peach50 hover:text-ob-ink {% if LANGUAGE_CODE == 'en' %}font-bold text-ob-peach800{% endif %}" title="{% trans 'English' %}">EN</button>
+    </form>
+</div>

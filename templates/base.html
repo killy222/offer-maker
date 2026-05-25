@@ -1,0 +1,133 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'bg' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Offer Builder" %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;600;700;800&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['"Bricolage Grotesque"', 'ui-serif', 'Georgia', 'serif'],
+                        sans: ['Lexend', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        ob: {
+                            cream: '#FAF7F2',
+                            peach50: '#FDF6F3',
+                            peach100: '#F8E6DD',
+                            peach200: '#F0D0C2',
+                            peach400: '#D9734D',
+                            peach600: '#B84A28',
+                            peach800: '#7A3419',
+                            ink: '#1C1917',
+                            muted: '#57534E',
+                            line: '#E7E5E4',
+                        },
+                    },
+                    borderRadius: {
+                        ob: '1.125rem',
+                        'ob-lg': '1.375rem',
+                        'ob-xl': '1.75rem',
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        :root {
+            --ob-peach50: #FDF6F3;
+            --ob-peach100: #F8E6DD;
+            --ob-peach600: #B84A28;
+            --ob-peach800: #7A3419;
+            --ob-cream: #FAF7F2;
+            --ob-ink: #1c1917;
+            --ob-line: #e7e5e4;
+        }
+        .ob-body-gradient {
+            background: linear-gradient(165deg, var(--ob-cream) 0%, #f3ebe4 48%, #efe4dc 100%);
+        }
+        main input[type="text"]:not(.ob-skip-global),
+        main input[type="password"]:not(.ob-skip-global),
+        main input[type="email"]:not(.ob-skip-global),
+        main input[type="number"]:not(.ob-skip-global),
+        main input[type="date"]:not(.ob-skip-global),
+        main input[type="url"]:not(.ob-skip-global),
+        main input[type="search"]:not(.ob-skip-global),
+        main textarea:not(.ob-skip-global),
+        main select:not(.ob-skip-global) {
+            width: 100%;
+            border-radius: 0.75rem;
+            border: 1px solid var(--ob-line);
+            background: #fffef9;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            color: var(--ob-ink);
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        main input:focus,
+        main textarea:focus,
+        main select:focus {
+            outline: none;
+            border-color: var(--ob-peach400, #d9734d);
+            box-shadow: 0 0 0 3px rgba(216, 115, 77, 0.18);
+        }
+        main form label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #44403c;
+        }
+    </style>
+</head>
+<body class="ob-body-gradient min-h-screen font-sans text-ob-ink antialiased">
+    {% if not user.is_authenticated %}
+    <div class="border-b border-ob-peach100 bg-white/95 shadow-sm">
+        <div class="mx-auto flex max-w-7xl items-center justify-end gap-2 px-4 py-2">
+            {% include "partials/language_switcher.html" %}
+        </div>
+    </div>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <header class="sticky top-0 z-40 border-b border-ob-peach100 bg-white/90 shadow-sm backdrop-blur-md">
+        <div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3.5">
+            <a href="{% url 'dashboard' %}" class="font-display text-xl font-bold tracking-tight text-ob-peach800 hover:text-ob-peach600">
+                {% trans "Offer Builder" %}
+            </a>
+            <nav class="flex flex-wrap items-center gap-x-1 gap-y-2 text-sm font-medium">
+                <a href="{% url 'dashboard' %}" class="rounded-ob px-3 py-2 text-ob-muted hover:bg-ob-peach50 hover:text-ob-ink">{% trans "Offers" %}</a>
+                <a href="{% url 'offer_create' %}" class="rounded-ob px-3 py-2 text-ob-muted hover:bg-ob-peach50 hover:text-ob-ink">{% trans "New offer" %}</a>
+                <a href="{% url 'client_list' %}" class="rounded-ob px-3 py-2 text-ob-muted hover:bg-ob-peach50 hover:text-ob-ink">{% trans "Clients" %}</a>
+                <a href="{% url 'catalog_list' %}" class="rounded-ob px-3 py-2 text-ob-muted hover:bg-ob-peach50 hover:text-ob-ink">{% trans "Catalog" %}</a>
+                <a href="{% url 'unit_list' %}" class="rounded-ob px-3 py-2 text-ob-muted hover:bg-ob-peach50 hover:text-ob-ink">{% trans "Units" %}</a>
+                <a href="{% url 'company_profile' %}" class="rounded-ob px-3 py-2 text-ob-muted hover:bg-ob-peach50 hover:text-ob-ink">{% trans "Company" %}</a>
+                {% include "partials/language_switcher.html" %}
+                <form method="post" action="{% url 'logout' %}" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="rounded-ob px-3 py-2 text-ob-muted hover:bg-ob-peach50 hover:text-ob-peach800">{% trans "Logout" %}</button>
+                </form>
+            </nav>
+        </div>
+    </header>
+    {% endif %}
+    <main class="mx-auto w-full max-w-7xl px-4 py-8 sm:py-10">
+        {% if messages %}
+        <div class="mb-6 space-y-2 font-sans" role="status" aria-live="polite">
+            {% for message in messages %}
+            <div class="rounded-ob-lg border px-4 py-3 text-sm shadow-sm {% if message.tags == 'error' %}border-red-200/80 bg-red-50 text-red-900{% elif message.tags == 'success' %}border-emerald-200/80 bg-emerald-50 text-emerald-900{% else %}border-ob-peach100 bg-white text-ob-ink{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

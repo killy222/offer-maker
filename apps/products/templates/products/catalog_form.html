@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="rounded-ob-xl border border-ob-peach100 bg-white p-8 shadow-sm">
+    <h1 class="font-display text-2xl font-bold text-ob-ink">{{ form_title }}</h1>
+    <p class="mt-2 text-sm text-ob-muted">{% trans "Choose a unit (piece, m², or m). Final price is base price times one plus VAT over 100, rounded to two decimals." %}</p>
+
+    <form method="post" class="mt-6 grid gap-4">
+        {% csrf_token %}
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-stone-700" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-stone-700" for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-stone-700" for="{{ form.unit.id_for_label }}">{{ form.unit.label }}</label>
+            {{ form.unit }}
+            {{ form.unit.errors }}
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-stone-700" for="{{ form.base_price.id_for_label }}">{{ form.base_price.label }}</label>
+            {{ form.base_price }}
+            {{ form.base_price.errors }}
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-stone-700" for="{{ form.vat_rate_percent.id_for_label }}">{{ form.vat_rate_percent.label }}</label>
+            {{ form.vat_rate_percent }}
+            {{ form.vat_rate_percent.errors }}
+        </div>
+
+        {% if object and object.pk %}
+        <div class="rounded-ob-lg border border-ob-peach100 bg-ob-peach50/60 p-4 text-sm text-ob-ink">
+            <span class="text-ob-muted">{% trans "Current final price (computed):" %}</span>
+            <strong class="ml-2 font-display text-lg text-ob-peach800">{{ object.final_price }}</strong>
+        </div>
+        {% endif %}
+
+        {% if form.non_field_errors %}
+        <div class="rounded-ob-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <div class="flex flex-wrap gap-3">
+            <button type="submit" class="rounded-ob-lg bg-ob-peach800 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-ob-peach600">
+                {{ submit_label }}
+            </button>
+            <a href="{% url 'catalog_list' %}" class="rounded-ob-lg border-2 border-ob-ink bg-white px-5 py-2.5 text-sm font-semibold text-ob-ink hover:bg-ob-peach50">
+                {% trans "Cancel" %}
+            </a>
+        </div>
+    </form>
+</section>
+{% endblock %}

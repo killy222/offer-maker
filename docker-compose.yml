@@ -1,0 +1,112 @@
+services:
+  application: &application
+    build: .
+    networks:
+      - offer_creator
+    volumes:
+      - .:/app
+    environment: &application_env
+      POSTGRES_DB: ${POSTGRES_DB:-offer_creator}
+      POSTGRES_USER: ${POSTGRES_USER:-offer_creator}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-offer_creator}
+      POSTGRES_PORT: 5432
+      DEFAULT_FROM_EMAIL: ${DEFAULT_FROM_EMAIL:-no-reply@example.com}
+      USE_S3_STORAGE: ${USE_S3_STORAGE:-1}
+      AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER:-minioadmin}
+      AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      AWS_STORAGE_BUCKET_NAME: ${MINIO_BUCKET:-offer-creator-media}
+      AWS_S3_ENDPOINT_URL: ${AWS_S3_ENDPOINT_URL:-http://minio:9000}
+      AWS_S3_PUBLIC_URL: ${AWS_S3_PUBLIC_URL:-http://localhost:9000}
+      AWS_S3_REGION_NAME: ${AWS_S3_REGION_NAME:-us-east-1}
+      AWS_S3_ADDRESSING_STYLE: ${AWS_S3_ADDRESSING_STYLE:-path}
+
+  db: &db
+    image: postgres:16-alpine
+    networks:
+      - offer_creator
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-offer_creator}
+      POSTGRES_USER: ${POSTGRES_USER:-offer_creator}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-offer_creator}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    <<: *application
+    command: sh -c "python manage.py ensure_s3_bucket && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      <<: *application_env
+      POSTGRES_HOST: db
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - minio
+      - minio-create-bucket
+
+  db-test:
+    <<: *db
+    networks:
+      - offer_creator_test
+    ports: []
+    volumes: []
+    environment:
+      POSTGRES_DB: ${POSTGRES_TEST_DB:-offer_creator_test}
+      POSTGRES_USER: ${POSTGRES_TEST_USER:-offer_creator_test}
+      POSTGRES_PASSWORD: ${POSTGRES_TEST_PASSWORD:-offer_creator_test}
+
+  pytest:
+    <<: *application
+    networks:
+      - offer_creator_test
+    command: sh -c "pytest -q"
+    environment:
+      <<: *application_env
+      POSTGRES_DB: ${POSTGRES_TEST_DB:-offer_creator_test}
+      POSTGRES_USER: ${POSTGRES_TEST_USER:-offer_creator_test}
+      POSTGRES_PASSWORD: ${POSTGRES_TEST_PASSWORD:-offer_creator_test}
+      POSTGRES_HOST: db-test
+      USE_POSTGRES_FOR_TESTS: "1"
+      USE_S3_STORAGE: "0"
+    depends_on:
+      - db-test
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - offer_creator
+
+  minio-create-bucket:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set local http://minio:9000 ${MINIO_ROOT_USER:-minioadmin} ${MINIO_ROOT_PASSWORD:-minioadmin};
+      /usr/bin/mc mb -p local/${MINIO_BUCKET:-offer-creator-media} || true;
+      /usr/bin/mc anonymous set download local/${MINIO_BUCKET:-offer-creator-media};
+      exit 0;
+      "
+    networks:
+      - offer_creator
+
+volumes:
+  postgres_data: {}
+  minio_data: {}
+
+networks:
+  offer_creator:
+    driver: bridge
+  offer_creator_test:
+    driver: bridge
