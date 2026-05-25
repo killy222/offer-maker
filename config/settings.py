@@ -15,6 +15,8 @@ import sys
 from pathlib import Path
 from urllib.parse import urlparse
 
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -99,6 +101,10 @@ if "pytest" in sys.argv[0] and os.getenv("USE_POSTGRES_FOR_TESTS") != "1":
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": BASE_DIR / "test_db.sqlite3",
         }
+    }
+elif os.getenv("DATABASE_URL"):
+    DATABASES = {
+        "default": dj_database_url.parse(os.environ["DATABASE_URL"], conn_max_age=600),
     }
 else:
     DATABASES = {
