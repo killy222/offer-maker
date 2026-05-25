@@ -80,11 +80,14 @@ def test_offer_pdf_text_bulgarian_default(client, company_profile, catalog_item)
     body = b"".join(r.streaming_content)
     reader = PdfReader(io.BytesIO(body))
     text = "".join((page.extract_text() or "") for page in reader.pages)
-    assert "Оферта" in text
+    assert "оферта" in text.lower()
 
 
 @pytest.mark.django_db
-def test_offer_pdf_text_english_session(english_client, company_profile, catalog_item):
+def test_offer_pdf_text_always_bulgarian_regardless_of_session(
+    english_client, company_profile, catalog_item
+):
+    """PDF is always in Bulgarian even when session language is English."""
     user = User.objects.create_user(username="pdfen", password="pass12345")
     english_client.force_login(user)
     offer = Offer.objects.create(user=user)
@@ -100,4 +103,5 @@ def test_offer_pdf_text_english_session(english_client, company_profile, catalog
     body = b"".join(r.streaming_content)
     reader = PdfReader(io.BytesIO(body))
     text = "".join((page.extract_text() or "") for page in reader.pages)
-    assert "Offer" in text
+    assert "оферта" in text.lower()
+    assert "Сума за плащане" in text

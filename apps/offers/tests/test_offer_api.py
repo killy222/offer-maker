@@ -253,3 +253,362 @@ def test_client_create_api(client, operator_user, company_profile):
     assert r.status_code == 200
     assert r.json()["name"] == "API Client"
     assert ClientCompany.objects.filter(name="API Client").exists()
+
+
+# ---------------------------------------------------------------------------
+# Coverage: require_json decorator (line 111)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_require_json_rejects_non_json_content_type(client, operator_user, company_profile):
+    client.force_login(operator_user)
+    offer = Offer.objects.create(user=operator_user)
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.post(
+        reverse("client_create_api"),
+        data="name=test",
+        content_type="application/x-www-form-urlencoded",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 415
+    assert "application/json" in r.json()["error"]
+
+
+# ---------------------------------------------------------------------------
+# Coverage: ClientCreateView error paths (lines 248-252, 257-258)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_client_create_api_invalid_json(client, operator_user, company_profile):
+    client.force_login(operator_user)
+    client.get(reverse("offer_create"))
+    token = client.cookies["csrftoken"].value
+    r = client.post(
+        reverse("client_create_api"),
+        data="{bad json",
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 400
+    assert "Invalid JSON" in r.json()["error"]
+
+
+@pytest.mark.django_db
+def test_client_create_api_empty_name(client, operator_user, company_profile):
+    client.force_login(operator_user)
+    client.get(reverse("offer_create"))
+    token = client.cookies["csrftoken"].value
+    r = client.post(
+        reverse("client_create_api"),
+        data=json.dumps({"name": "   "}),
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 400
+    assert "required" in r.json()["error"].lower()
+
+
+# ---------------------------------------------------------------------------
+# Coverage: OfferPatchView error paths (lines 268-269, 274-275, 291, 293)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_patch_offer_invalid_json(client, operator_user, company_profile):
+    client.force_login(operator_user)
+    offer = Offer.objects.create(user=operator_user)
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.patch(
+        reverse("offer_patch", kwargs={"pk": offer.pk}),
+        data="{bad",
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 400
+    assert "Invalid JSON" in r.json()["error"]
+
+
+@pytest.mark.django_db
+def test_patch_offer_invalid_client_id(client, operator_user, company_profile):
+    client.force_login(operator_user)
+    offer = Offer.objects.create(user=operator_user)
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.patch(
+        reverse("offer_patch", kwargs={"pk": offer.pk}),
+        data=json.dumps({"client_id": 99999}),
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 404
+    assert "Client not found" in r.json()["error"]
+
+
+@pytest.mark.django_db
+def test_patch_offer_clear_client_with_empty_name(client, operator_user, company_profile):
+    client.force_login(operator_user)
+    cl = ClientCompany.objects.create(name="OldClient")
+    offer = Offer.objects.create(user=operator_user, client=cl)
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.patch(
+        reverse("offer_patch", kwargs={"pk": offer.pk}),
+        data=json.dumps({"client_name": ""}),
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 200
+    offer.refresh_from_db()
+    assert offer.client is None
+
+
+@pytest.mark.django_db
+def test_patch_offer_clear_client_with_null_client_id(client, operator_user, company_profile):
+    client.force_login(operator_user)
+    cl = ClientCompany.objects.create(name="SomeClient")
+    offer = Offer.objects.create(user=operator_user, client=cl)
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.patch(
+        reverse("offer_patch", kwargs={"pk": offer.pk}),
+        data=json.dumps({"client_id": None}),
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 200
+    offer.refresh_from_db()
+    assert offer.client is None
+
+
+@pytest.mark.django_db
+def test_patch_offer_clear_date(client, operator_user, company_profile):
+    client.force_login(operator_user)
+    offer = Offer.objects.create(user=operator_user)
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.patch(
+        reverse("offer_patch", kwargs={"pk": offer.pk}),
+        data=json.dumps({"offer_date": ""}),
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 200
+    offer.refresh_from_db()
+    assert offer.offer_date is None
+
+
+@pytest.mark.django_db
+def test_patch_offer_set_validity_label(client, operator_user, company_profile):
+    client.force_login(operator_user)
+    offer = Offer.objects.create(user=operator_user)
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.patch(
+        reverse("offer_patch", kwargs={"pk": offer.pk}),
+        data=json.dumps({"validity_label": "30 days"}),
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 200
+    offer.refresh_from_db()
+    assert offer.validity_label == "30 days"
+
+
+# ---------------------------------------------------------------------------
+# Coverage: OfferLineAddView invalid JSON (lines 316-317)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_offer_line_add_invalid_json(client, operator_user, company_profile):
+    client.force_login(operator_user)
+    client.get(reverse("offer_create"))
+    token = client.cookies["csrftoken"].value
+    r = client.post(
+        reverse("offer_line_add"),
+        data="{bad json",
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 400
+    assert "Invalid JSON" in r.json()["error"]
+
+
+# ---------------------------------------------------------------------------
+# Coverage: OfferLinePatchView.patch (lines 338-361)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_patch_line_quantity_and_price(client, operator_user, company_profile, catalog_item):
+    client.force_login(operator_user)
+    offer = Offer.objects.create(user=operator_user)
+    from apps.offers.models import OfferLine
+
+    line = OfferLine.objects.create(
+        offer=offer,
+        catalog_item=catalog_item,
+        quantity=Decimal("1"),
+        unit_price=Decimal("50.00"),
+        vat_rate_percent=Decimal("20"),
+    )
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.patch(
+        reverse("offer_line_patch", kwargs={"pk": line.pk}),
+        data=json.dumps({"quantity": "3", "unit_price": "25.00"}),
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 200
+    line.refresh_from_db()
+    assert line.quantity == Decimal("3")
+    assert line.unit_price == Decimal("25.00")
+
+
+@pytest.mark.django_db
+def test_patch_line_invalid_quantity(client, operator_user, company_profile, catalog_item):
+    client.force_login(operator_user)
+    offer = Offer.objects.create(user=operator_user)
+    from apps.offers.models import OfferLine
+
+    line = OfferLine.objects.create(
+        offer=offer,
+        catalog_item=catalog_item,
+        quantity=Decimal("1"),
+        unit_price=Decimal("50.00"),
+        vat_rate_percent=Decimal("20"),
+    )
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.patch(
+        reverse("offer_line_patch", kwargs={"pk": line.pk}),
+        data=json.dumps({"quantity": "0"}),
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 400
+    assert "quantity" in r.json()["error"].lower()
+
+
+@pytest.mark.django_db
+def test_patch_line_invalid_unit_price(client, operator_user, company_profile, catalog_item):
+    client.force_login(operator_user)
+    offer = Offer.objects.create(user=operator_user)
+    from apps.offers.models import OfferLine
+
+    line = OfferLine.objects.create(
+        offer=offer,
+        catalog_item=catalog_item,
+        quantity=Decimal("1"),
+        unit_price=Decimal("50.00"),
+        vat_rate_percent=Decimal("20"),
+    )
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.patch(
+        reverse("offer_line_patch", kwargs={"pk": line.pk}),
+        data=json.dumps({"unit_price": "-5"}),
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 400
+    assert "price" in r.json()["error"].lower()
+
+
+@pytest.mark.django_db
+def test_patch_line_invalid_vat(client, operator_user, company_profile, catalog_item):
+    client.force_login(operator_user)
+    offer = Offer.objects.create(user=operator_user)
+    from apps.offers.models import OfferLine
+
+    line = OfferLine.objects.create(
+        offer=offer,
+        catalog_item=catalog_item,
+        quantity=Decimal("1"),
+        unit_price=Decimal("50.00"),
+        vat_rate_percent=Decimal("20"),
+    )
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.patch(
+        reverse("offer_line_patch", kwargs={"pk": line.pk}),
+        data=json.dumps({"vat_rate_percent": "150"}),
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 400
+    assert "vat" in r.json()["error"].lower()
+
+
+@pytest.mark.django_db
+def test_patch_line_invalid_json(client, operator_user, company_profile, catalog_item):
+    client.force_login(operator_user)
+    offer = Offer.objects.create(user=operator_user)
+    from apps.offers.models import OfferLine
+
+    line = OfferLine.objects.create(
+        offer=offer,
+        catalog_item=catalog_item,
+        quantity=Decimal("1"),
+        unit_price=Decimal("50.00"),
+        vat_rate_percent=Decimal("20"),
+    )
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.patch(
+        reverse("offer_line_patch", kwargs={"pk": line.pk}),
+        data="{bad",
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 400
+
+
+# ---------------------------------------------------------------------------
+# Coverage: OfferLinePatchView.delete (lines 364-368)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_delete_line(client, operator_user, company_profile, catalog_item):
+    client.force_login(operator_user)
+    offer = Offer.objects.create(user=operator_user)
+    from apps.offers.models import OfferLine
+
+    line = OfferLine.objects.create(
+        offer=offer,
+        catalog_item=catalog_item,
+        quantity=Decimal("1"),
+        unit_price=Decimal("50.00"),
+        vat_rate_percent=Decimal("20"),
+    )
+    client.get(f"{reverse('offer_create')}?offer={offer.pk}")
+    token = client.cookies["csrftoken"].value
+    r = client.delete(
+        reverse("offer_line_patch", kwargs={"pk": line.pk}),
+        content_type="application/json",
+        HTTP_X_CSRFTOKEN=token,
+    )
+    assert r.status_code == 200
+    assert OfferLine.objects.filter(pk=line.pk).count() == 0
+    assert r.json()["totals"]["total"] == "0.00"
+
+
+# ---------------------------------------------------------------------------
+# Coverage: _decimal_or_none helper (lines 28-30)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_decimal_or_none_helper():
+    from apps.offers.views import _decimal_or_none
+
+    assert _decimal_or_none(None) is None
+    assert _decimal_or_none("") is None
+    assert _decimal_or_none("3.14") == Decimal("3.14")
+    assert _decimal_or_none(42) == Decimal("42")
