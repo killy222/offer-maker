@@ -37,6 +37,7 @@ test_db.sqlite3
 # Build artifacts
 dist/
 build/
+staticfiles/
 
 # OS
 .DS_Store
