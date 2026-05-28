@@ -5,7 +5,7 @@ from typing import Any
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
-from django.db.models import Count, Max, Q
+from django.db.models import Max, Q
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -20,6 +20,7 @@ from apps.clients.models import ClientCompany
 from apps.company.models import CompanyProfile
 from apps.products.models import CatalogItem
 
+from .access import get_offer_for_user, offer_queryset_for_user, offers_list_queryset_for_user
 from .models import Offer, OfferLine
 from .validity import VALIDITY_7, VALIDITY_14, VALIDITY_30, VALIDITY_60
 
@@ -28,28 +29,6 @@ def _decimal_or_none(value):
     if value is None or value == "":
         return None
     return Decimal(str(value))
-
-
-def _offer_for_user(request, pk):
-    return get_object_or_404(Offer, pk=pk, user=request.user)
-
-
-def offers_list_queryset_for_user(user):
-    """Offers visible in list/sidebar: hide abandoned compose rows (no lines and no header data)."""
-    return (
-        Offer.objects.filter(user=user)
-        .annotate(line_count=Count("lines"))
-        .filter(
-            ~(
-                Q(line_count=0)
-                & Q(client__isnull=True)
-                & Q(site_address="")
-                & Q(offer_date__isnull=True)
-                & Q(validity_label="")
-            )
-        )
-        .order_by("-updated_at")
-    )
 
 
 def _line_json(line: OfferLine) -> dict:
@@ -138,8 +117,8 @@ class OfferDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         return (
-            Offer.objects.filter(user=self.request.user)
-            .select_related("client")
+            offer_queryset_for_user(self.request.user)
+            .select_related("client", "user")
             .prefetch_related("lines__catalog_item__unit")
         )
 
@@ -155,7 +134,7 @@ class OfferCreateView(LoginRequiredMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         offer_id = request.GET.get("offer")
         if offer_id:
-            _offer_for_user(request, offer_id)
+            get_offer_for_user(request.user, offer_id)
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -163,7 +142,7 @@ class OfferCreateView(LoginRequiredMixin, TemplateView):
         context["company_profile"] = CompanyProfile.get_solo()
         offer_id = self.request.GET.get("offer")
         if offer_id:
-            offer = _offer_for_user(self.request, offer_id)
+            offer = get_offer_for_user(self.request.user, offer_id)
             context["offer"] = offer
             context["offer_payload_dict"] = _offer_payload(offer)
         else:
@@ -262,7 +241,7 @@ class ClientCreateView(LoginRequiredMixin, View):
 class OfferPatchView(LoginRequiredMixin, View):
     @require_json
     def patch(self, request, pk):
-        offer = _offer_for_user(request, pk)
+        offer = get_offer_for_user(request.user, pk)
         try:
             data = json.loads(request.body.decode() or "{}")
         except json.JSONDecodeError:
@@ -315,7 +294,7 @@ class OfferLineAddView(LoginRequiredMixin, View):
             data = json.loads(request.body.decode() or "{}")
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON"}, status=400)
-        offer = _offer_for_user(request, data.get("offer_id"))
+        offer = get_offer_for_user(request.user, data.get("offer_id"))
         catalog_item = get_object_or_404(CatalogItem, pk=data.get("catalog_item_id"))
         max_sort = offer.lines.aggregate(m=Max("sort_order"))["m"]
         next_sort = (max_sort if max_sort is not None else -1) + 1
@@ -336,7 +315,7 @@ class OfferLinePatchView(LoginRequiredMixin, View):
     @require_json
     def patch(self, request, pk):
         line = get_object_or_404(OfferLine.objects.select_related("offer"), pk=pk)
-        _offer_for_user(request, line.offer_id)
+        get_offer_for_user(request.user, line.offer_id)
         try:
             data = json.loads(request.body.decode() or "{}")
         except json.JSONDecodeError:
@@ -362,7 +341,7 @@ class OfferLinePatchView(LoginRequiredMixin, View):
 
     def delete(self, request, pk):
         line = get_object_or_404(OfferLine, pk=pk)
-        _offer_for_user(request, line.offer_id)
+        get_offer_for_user(request.user, line.offer_id)
         offer = line.offer
         line.delete()
         return JsonResponse(_offer_payload(offer))

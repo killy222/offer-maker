@@ -66,4 +66,5 @@ include = ["config*", "apps*"]
 dev = [
     "polib>=1.2.0",
     "pypdf>=6.10.2",
+    "pytest-cov>=7.1.0",
 ]
