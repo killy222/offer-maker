@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-05 13:47+0000\n"
+"POT-Creation-Date: 2026-05-28 19:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,9 +30,8 @@ msgstr "Адрес"
 msgid "Phone"
 msgstr "Телефон"
 
-#: apps/clients/forms.py:20 apps/products/forms.py:65
-#: apps/products/forms.py:71 apps/products/forms.py:79
-#: apps/products/forms.py:97
+#: apps/clients/forms.py:20 apps/products/forms.py:64 apps/products/forms.py:70
+#: apps/products/forms.py:78 apps/products/forms.py:96
 msgid "This field is required."
 msgstr "Това поле е задължително."
 
@@ -271,7 +270,7 @@ msgstr "Каталог продукти"
 msgid "Search products"
 msgstr "Търсене на продукти"
 
-#: apps/offers/templates/offers/offer_create.html:41 apps/offers/views.py:198
+#: apps/offers/templates/offers/offer_create.html:41 apps/offers/views.py:195
 msgid "Search (min. 3 characters)…"
 msgstr "Търсене (минимум 3 знака)…"
 
@@ -282,9 +281,9 @@ msgstr "Търсене (минимум 3 знака)…"
 #: apps/offers/templates/offers/offer_detail.html:61
 #: apps/offers/templates/offers/offer_detail.html:76
 #: apps/offers/templates/offers/offer_detail.html:80
-#: apps/offers/templates/offers/offer_detail.html:84 apps/offers/views.py:197
-msgid "BGN"
-msgstr "лв."
+#: apps/offers/templates/offers/offer_detail.html:84 apps/offers/views.py:194
+msgid "EUR"
+msgstr "евро"
 
 #: apps/offers/templates/offers/offer_create.html:51
 msgid "Add to offer"
@@ -300,20 +299,20 @@ msgstr "Нова оферта"
 
 #: apps/offers/templates/offers/offer_create.html:62
 msgid ""
-"Line items save automatically when you add or edit rows. Click Save offer to"
-" store client and offer details (this creates the offer if it does not exist"
-" yet)."
+"Line items save automatically when you add or edit rows. Click Save offer to "
+"store client and offer details (this creates the offer if it does not exist "
+"yet)."
 msgstr ""
 "Редовете се записват автоматично при добавяне или редакция. Натисни „Запази "
-"оферта“, за да запазиш клиент и данни за офертата (създава офертата, ако още"
-" не съществува)."
+"оферта“, за да запазиш клиент и данни за офертата (създава офертата, ако още "
+"не съществува)."
 
 #: apps/offers/templates/offers/offer_create.html:67
 #: apps/offers/templates/offers/offer_detail.html:23
 msgid "Client"
 msgstr "Клиент"
 
-#: apps/offers/templates/offers/offer_create.html:68 apps/offers/views.py:199
+#: apps/offers/templates/offers/offer_create.html:68 apps/offers/views.py:196
 msgid "Type to search or enter a new name…"
 msgstr "Търси или въведи ново име…"
 
@@ -342,41 +341,39 @@ msgid "Download PDF"
 msgstr "Изтегли PDF"
 
 #: apps/offers/templates/offers/offer_create.html:101
-#: apps/offers/templates/offers/offer_detail.html:45 apps/pdf/offer_pdf.py:204
-#: apps/products/forms.py:51
+#: apps/offers/templates/offers/offer_detail.html:45 apps/products/forms.py:50
 msgid "Description"
 msgstr "Описание"
 
 #: apps/offers/templates/offers/offer_create.html:102
-#: apps/offers/templates/offers/offer_detail.html:46 apps/pdf/offer_pdf.py:205
+#: apps/offers/templates/offers/offer_detail.html:46
 msgid "Qty"
 msgstr "Кол."
 
 #: apps/offers/templates/offers/offer_create.html:103
-#: apps/offers/templates/offers/offer_detail.html:48 apps/pdf/offer_pdf.py:207
+#: apps/offers/templates/offers/offer_detail.html:48
 msgid "Unit price"
 msgstr "Ед. цена"
 
 #: apps/offers/templates/offers/offer_create.html:104
 #: apps/offers/templates/offers/offer_create.html:121
 #: apps/offers/templates/offers/offer_detail.html:49
-#: apps/offers/templates/offers/offer_detail.html:79 apps/pdf/offer_pdf.py:208
-#: apps/pdf/offer_pdf.py:210 apps/pdf/offer_pdf.py:255
+#: apps/offers/templates/offers/offer_detail.html:79
 msgid "VAT"
 msgstr "ДДС"
 
 #: apps/offers/templates/offers/offer_create.html:105
 #: apps/offers/templates/offers/offer_create.html:125
-#: apps/offers/templates/offers/offer_detail.html:83 apps/pdf/offer_pdf.py:211
+#: apps/offers/templates/offers/offer_detail.html:83
 msgid "Total"
 msgstr "Общо"
 
-#: apps/offers/templates/offers/offer_create.html:111 apps/offers/views.py:194
+#: apps/offers/templates/offers/offer_create.html:111 apps/offers/views.py:191
 msgid "No lines yet. Add a product from the catalog."
 msgstr "Все още няма редове. Добави продукт от каталога."
 
 #: apps/offers/templates/offers/offer_create.html:117
-#: apps/offers/templates/offers/offer_detail.html:75 apps/pdf/offer_pdf.py:254
+#: apps/offers/templates/offers/offer_detail.html:75
 msgid "Subtotal (ex VAT)"
 msgstr "Сума без ДДС"
 
@@ -391,16 +388,15 @@ msgstr "Отвори в редактора"
 #: apps/offers/templates/offers/offer_detail.html:24
 #: apps/offers/templates/offers/offer_detail.html:28
 #: apps/offers/templates/offers/offer_detail.html:32
-#: apps/offers/templates/offers/offer_detail.html:36 apps/offers/views.py:183
+#: apps/offers/templates/offers/offer_detail.html:36 apps/offers/views.py:180
 msgid "—"
 msgstr "—"
 
-#: apps/offers/templates/offers/offer_detail.html:41 apps/pdf/offer_pdf.py:201
+#: apps/offers/templates/offers/offer_detail.html:41
 msgid "Line items"
 msgstr "Редове"
 
-#: apps/offers/templates/offers/offer_detail.html:47 apps/pdf/offer_pdf.py:206
-#: apps/products/forms.py:52
+#: apps/offers/templates/offers/offer_detail.html:47 apps/products/forms.py:51
 msgid "Unit"
 msgstr "Мярка"
 
@@ -412,101 +408,76 @@ msgstr "Ред общо"
 msgid "No line items."
 msgstr "Няма редове."
 
-#: apps/offers/views.py:184
+#: apps/offers/views.py:181
 msgid "7 days"
 msgstr "7 дни"
 
-#: apps/offers/views.py:185
+#: apps/offers/views.py:182
 msgid "14 days"
 msgstr "14 дни"
 
-#: apps/offers/views.py:186
+#: apps/offers/views.py:183
 msgid "30 days"
 msgstr "30 дни"
 
-#: apps/offers/views.py:187
+#: apps/offers/views.py:184
 msgid "60 days"
 msgstr "60 дни"
 
-#: apps/offers/views.py:190
+#: apps/offers/views.py:187
 msgid "Saved."
 msgstr "Запазено."
 
-#: apps/offers/views.py:191
+#: apps/offers/views.py:188
 msgid "Could not start offer."
 msgstr "Неуспешно стартиране на оферта."
 
-#: apps/offers/views.py:192
+#: apps/offers/views.py:189
 msgid "Save failed."
 msgstr "Запазването не бе успешно."
 
-#: apps/offers/views.py:193
+#: apps/offers/views.py:190
 msgid "Request failed."
 msgstr "Заявката не бе успешна."
 
-#: apps/offers/views.py:195
+#: apps/offers/views.py:192
 msgid "Validation error."
 msgstr "Грешка при валидация."
 
-#: apps/offers/views.py:196
+#: apps/offers/views.py:193
 msgid "Remove line"
 msgstr "Премахни ред"
 
-#: apps/pdf/offer_pdf.py:85
+#: apps/pdf/offer_pdf.py:135
 #, python-format
 msgid "Offer %(id)s"
 msgstr "Оферта %(id)s"
 
-#: apps/pdf/offer_pdf.py:185
-msgid "Offer"
-msgstr "Оферта"
-
-#: apps/pdf/offer_pdf.py:186
-#, python-format
-msgid "Offer #%(id)s"
-msgstr "Оферта №%(id)s"
-
-#: apps/pdf/offer_pdf.py:198
-msgid "Details"
-msgstr "Данни"
-
-#: apps/pdf/offer_pdf.py:209
-msgid "Net"
-msgstr "Нето"
-
-#: apps/pdf/offer_pdf.py:252
-msgid "Totals"
-msgstr "Обобщение"
-
-#: apps/pdf/offer_pdf.py:256
-msgid "Total (incl. VAT)"
-msgstr "Обща сума (с ДДС)"
-
-#: apps/products/forms.py:50
+#: apps/products/forms.py:49
 msgid "Name"
 msgstr "Име"
 
-#: apps/products/forms.py:53
+#: apps/products/forms.py:52
 msgid "Base price"
 msgstr "Базова цена"
 
-#: apps/products/forms.py:54
+#: apps/products/forms.py:53
 msgid "VAT rate (%)"
 msgstr "ДДС ставка (%)"
 
-#: apps/products/forms.py:73
+#: apps/products/forms.py:72
 msgid "Base price cannot be negative."
 msgstr "Базовата цена не може да е отрицателна."
 
-#: apps/products/forms.py:81
+#: apps/products/forms.py:80
 msgid "VAT rate must be between 0 and 100."
 msgstr "ДДС ставката трябва да е между 0 и 100."
 
-#: apps/products/forms.py:90
+#: apps/products/forms.py:89
 msgid "Label (Bulgarian)"
 msgstr "Име (на български)"
 
-#: apps/products/forms.py:91
+#: apps/products/forms.py:90
 msgid "Sort order"
 msgstr "Ред на показване"
 
@@ -580,8 +551,7 @@ msgstr "Мерни единици"
 msgid "Manage measurement units used in product catalog items."
 msgstr "Управлявай мерните единици, използвани в артикулите от каталога."
 
-#: apps/products/templates/products/unit_list.html:12
-#: apps/products/views.py:81
+#: apps/products/templates/products/unit_list.html:12 apps/products/views.py:81
 msgid "Add unit"
 msgstr "Добави мерна единица"
 
@@ -633,8 +603,7 @@ msgstr "Запази"
 #, python-format
 msgid "Cannot delete \"%(name)s\" because it is used on one or more offers."
 msgstr ""
-"Не може да се изтрие „%(name)s“, защото се използва в една или повече "
-"оферти."
+"Не може да се изтрие „%(name)s“, защото се използва в една или повече оферти."
 
 #: apps/products/views.py:63
 #, python-format
@@ -661,8 +630,8 @@ msgid ""
 "Cannot delete unit \"%(name)s\" because it is used by one or more catalog "
 "items."
 msgstr ""
-"Не може да се изтрие мерната единица \"%(name)s\", защото се използва в един"
-" или повече артикули от каталога."
+"Не може да се изтрие мерната единица \"%(name)s\", защото се използва в един "
+"или повече артикули от каталога."
 
 #: apps/products/views.py:128
 #, python-format
@@ -775,3 +744,24 @@ msgstr "Въведете имейла на оператора, за да пол�
 #: templates/registration/password_reset_form.html:16
 msgid "Send reset link"
 msgstr "Изпрати линк"
+
+#~ msgid "BGN"
+#~ msgstr "лв."
+
+#~ msgid "Offer"
+#~ msgstr "Оферта"
+
+#~ msgid "Offer #%(id)s"
+#~ msgstr "Оферта №%(id)s"
+
+#~ msgid "Details"
+#~ msgstr "Данни"
+
+#~ msgid "Net"
+#~ msgstr "Нето"
+
+#~ msgid "Totals"
+#~ msgstr "Обобщение"
+
+#~ msgid "Total (incl. VAT)"
+#~ msgstr "Обща сума (с ДДС)"

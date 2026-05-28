@@ -46,7 +46,7 @@
             <li class="flex items-center justify-between gap-2 rounded-ob-lg border border-transparent px-2 py-2 transition hover:border-ob-peach100 hover:bg-ob-peach50/60">
               <div class="min-w-0">
                 <p class="truncate font-medium text-ob-ink">{{ item.name }}</p>
-                <p class="text-xs text-ob-muted">{{ item.final_price }} {% trans "BGN" %} / {{ item.unit.label_bg }}</p>
+                <p class="text-xs text-ob-muted">{{ item.final_price }} {% trans "EUR" %} / {{ item.unit.label_bg }}</p>
               </div>
               <button type="button" class="add-catalog inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-ob-peach800 text-lg font-bold leading-none text-white shadow-sm hover:bg-ob-peach600" data-catalog-id="{{ item.pk }}" title="{% trans 'Add to offer' %}">+</button>
             </li>
@@ -115,15 +115,15 @@
           <dl class="space-y-1 rounded-ob-lg border border-ob-peach100 bg-ob-peach50/50 p-4 text-sm sm:min-w-[280px]">
             <div class="flex justify-between gap-8">
               <dt class="text-ob-muted">{% trans "Subtotal (ex VAT)" %}</dt>
-              <dd id="tot-sub" class="font-medium text-ob-ink">0.00 {% trans "BGN" %}</dd>
+              <dd id="tot-sub" class="font-medium text-ob-ink">0.00 {% trans "EUR" %}</dd>
             </div>
             <div class="flex justify-between gap-8">
               <dt class="text-ob-muted">{% trans "VAT" %}</dt>
-              <dd id="tot-vat" class="font-medium text-ob-ink">0.00 {% trans "BGN" %}</dd>
+              <dd id="tot-vat" class="font-medium text-ob-ink">0.00 {% trans "EUR" %}</dd>
             </div>
             <div class="flex justify-between gap-8 border-t border-ob-peach100 pt-2 text-base">
               <dt class="font-display font-bold text-ob-ink">{% trans "Total" %}</dt>
-              <dd id="tot-gross" class="font-display font-bold text-ob-peach800">0.00 {% trans "BGN" %}</dd>
+              <dd id="tot-gross" class="font-display font-bold text-ob-peach800">0.00 {% trans "EUR" %}</dd>
             </div>
           </dl>
         </footer>
@@ -179,7 +179,7 @@
   function formatMoney(s) {
     const n = Number(s);
     const loc = I18N.locale && I18N.locale.startsWith("bg") ? "bg-BG" : "en-GB";
-    const cur = I18N.currency || "BGN";
+    const cur = I18N.currency || "EUR";
     if (Number.isNaN(n)) return s + " " + cur;
     return n.toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " " + cur;
   }

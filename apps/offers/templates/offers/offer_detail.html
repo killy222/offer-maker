@@ -58,7 +58,7 @@
           <td class="px-4 py-3 text-ob-muted">{{ line.catalog_item.unit.label_bg }}</td>
           <td class="px-4 py-3 text-ob-muted">{{ line.unit_price }}</td>
           <td class="px-4 py-3 text-ob-muted">{{ line.vat_rate_percent }}</td>
-          <td class="px-4 py-3 font-semibold text-ob-ink">{{ line.line_gross }} {% trans "BGN" %}</td>
+          <td class="px-4 py-3 font-semibold text-ob-ink">{{ line.line_gross }} {% trans "EUR" %}</td>
         </tr>
         {% empty %}
         <tr>
@@ -73,15 +73,15 @@
   <dl class="mt-8 space-y-2 rounded-ob-lg border border-ob-peach100 bg-ob-peach50/50 p-5 text-sm sm:max-w-md">
     <div class="flex justify-between gap-4">
       <dt class="text-ob-muted">{% trans "Subtotal (ex VAT)" %}</dt>
-      <dd class="font-medium text-ob-ink">{{ t.subtotal_ex_vat }} {% trans "BGN" %}</dd>
+      <dd class="font-medium text-ob-ink">{{ t.subtotal_ex_vat }} {% trans "EUR" %}</dd>
     </div>
     <div class="flex justify-between gap-4">
       <dt class="text-ob-muted">{% trans "VAT" %}</dt>
-      <dd class="font-medium text-ob-ink">{{ t.vat_amount }} {% trans "BGN" %}</dd>
+      <dd class="font-medium text-ob-ink">{{ t.vat_amount }} {% trans "EUR" %}</dd>
     </div>
     <div class="flex justify-between gap-4 border-t border-ob-peach100 pt-2 text-base">
       <dt class="font-display font-bold text-ob-ink">{% trans "Total" %}</dt>
-      <dd class="font-display font-bold text-ob-peach800">{{ t.total }} {% trans "BGN" %}</dd>
+      <dd class="font-display font-bold text-ob-peach800">{{ t.total }} {% trans "EUR" %}</dd>
     </div>
   </dl>
   {% endwith %}

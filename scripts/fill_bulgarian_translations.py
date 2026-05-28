@@ -54,7 +54,7 @@ BG: dict[str, str] = {
     "Product catalog": "Каталог продукти",
     "Search products": "Търсене на продукти",
     "Search (min. 3 characters)…": "Търсене (минимум 3 знака)…",
-    "BGN": "лв.",
+    "EUR": "евро",
     "Add to offer": "Добави към офертата",
     "No catalog items.": "Няма артикули в каталога.",
     "New offer": "Нова оферта",

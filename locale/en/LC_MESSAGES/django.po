@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-04 19:23+0300\n"
+"POT-Creation-Date: 2026-05-28 19:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,8 +30,8 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
-#: apps/clients/forms.py:20 apps/products/forms.py:29 apps/products/forms.py:35
-#: apps/products/forms.py:43
+#: apps/clients/forms.py:20 apps/products/forms.py:64 apps/products/forms.py:70
+#: apps/products/forms.py:78 apps/products/forms.py:96
 msgid "This field is required."
 msgstr ""
 
@@ -41,6 +41,7 @@ msgstr ""
 
 #: apps/clients/templates/clients/client_form.html:41
 #: apps/products/templates/products/catalog_form.html:60
+#: apps/products/templates/products/unit_form.html:35
 msgid "Cancel"
 msgstr ""
 
@@ -58,6 +59,7 @@ msgstr ""
 
 #: apps/clients/templates/clients/client_list.html:32
 #: apps/products/templates/products/catalog_list.html:35
+#: apps/products/templates/products/unit_list.html:30
 msgid "Edit"
 msgstr ""
 
@@ -69,6 +71,7 @@ msgstr ""
 
 #: apps/clients/templates/clients/client_list.html:36
 #: apps/products/templates/products/catalog_list.html:39
+#: apps/products/templates/products/unit_list.html:34
 msgid "Delete"
 msgstr ""
 
@@ -264,7 +267,7 @@ msgstr ""
 msgid "Search products"
 msgstr ""
 
-#: apps/offers/templates/offers/offer_create.html:41 apps/offers/views.py:198
+#: apps/offers/templates/offers/offer_create.html:41 apps/offers/views.py:195
 msgid "Search (min. 3 characters)…"
 msgstr ""
 
@@ -275,8 +278,8 @@ msgstr ""
 #: apps/offers/templates/offers/offer_detail.html:61
 #: apps/offers/templates/offers/offer_detail.html:76
 #: apps/offers/templates/offers/offer_detail.html:80
-#: apps/offers/templates/offers/offer_detail.html:84 apps/offers/views.py:197
-msgid "BGN"
+#: apps/offers/templates/offers/offer_detail.html:84 apps/offers/views.py:194
+msgid "EUR"
 msgstr ""
 
 #: apps/offers/templates/offers/offer_create.html:51
@@ -303,7 +306,7 @@ msgstr ""
 msgid "Client"
 msgstr ""
 
-#: apps/offers/templates/offers/offer_create.html:68 apps/offers/views.py:199
+#: apps/offers/templates/offers/offer_create.html:68 apps/offers/views.py:196
 msgid "Type to search or enter a new name…"
 msgstr ""
 
@@ -332,41 +335,39 @@ msgid "Download PDF"
 msgstr ""
 
 #: apps/offers/templates/offers/offer_create.html:101
-#: apps/offers/templates/offers/offer_detail.html:45 apps/pdf/offer_pdf.py:204
-#: apps/products/forms.py:15
+#: apps/offers/templates/offers/offer_detail.html:45 apps/products/forms.py:50
 msgid "Description"
 msgstr ""
 
 #: apps/offers/templates/offers/offer_create.html:102
-#: apps/offers/templates/offers/offer_detail.html:46 apps/pdf/offer_pdf.py:205
+#: apps/offers/templates/offers/offer_detail.html:46
 msgid "Qty"
 msgstr ""
 
 #: apps/offers/templates/offers/offer_create.html:103
-#: apps/offers/templates/offers/offer_detail.html:48 apps/pdf/offer_pdf.py:207
+#: apps/offers/templates/offers/offer_detail.html:48
 msgid "Unit price"
 msgstr ""
 
 #: apps/offers/templates/offers/offer_create.html:104
 #: apps/offers/templates/offers/offer_create.html:121
 #: apps/offers/templates/offers/offer_detail.html:49
-#: apps/offers/templates/offers/offer_detail.html:79 apps/pdf/offer_pdf.py:208
-#: apps/pdf/offer_pdf.py:210 apps/pdf/offer_pdf.py:255
+#: apps/offers/templates/offers/offer_detail.html:79
 msgid "VAT"
 msgstr ""
 
 #: apps/offers/templates/offers/offer_create.html:105
 #: apps/offers/templates/offers/offer_create.html:125
-#: apps/offers/templates/offers/offer_detail.html:83 apps/pdf/offer_pdf.py:211
+#: apps/offers/templates/offers/offer_detail.html:83
 msgid "Total"
 msgstr ""
 
-#: apps/offers/templates/offers/offer_create.html:111 apps/offers/views.py:194
+#: apps/offers/templates/offers/offer_create.html:111 apps/offers/views.py:191
 msgid "No lines yet. Add a product from the catalog."
 msgstr ""
 
 #: apps/offers/templates/offers/offer_create.html:117
-#: apps/offers/templates/offers/offer_detail.html:75 apps/pdf/offer_pdf.py:254
+#: apps/offers/templates/offers/offer_detail.html:75
 msgid "Subtotal (ex VAT)"
 msgstr ""
 
@@ -381,16 +382,15 @@ msgstr ""
 #: apps/offers/templates/offers/offer_detail.html:24
 #: apps/offers/templates/offers/offer_detail.html:28
 #: apps/offers/templates/offers/offer_detail.html:32
-#: apps/offers/templates/offers/offer_detail.html:36 apps/offers/views.py:183
+#: apps/offers/templates/offers/offer_detail.html:36 apps/offers/views.py:180
 msgid "—"
 msgstr ""
 
-#: apps/offers/templates/offers/offer_detail.html:41 apps/pdf/offer_pdf.py:201
+#: apps/offers/templates/offers/offer_detail.html:41
 msgid "Line items"
 msgstr ""
 
-#: apps/offers/templates/offers/offer_detail.html:47 apps/pdf/offer_pdf.py:206
-#: apps/products/forms.py:16
+#: apps/offers/templates/offers/offer_detail.html:47 apps/products/forms.py:51
 msgid "Unit"
 msgstr ""
 
@@ -402,94 +402,77 @@ msgstr ""
 msgid "No line items."
 msgstr ""
 
-#: apps/offers/views.py:184
+#: apps/offers/views.py:181
 msgid "7 days"
 msgstr ""
 
-#: apps/offers/views.py:185
+#: apps/offers/views.py:182
 msgid "14 days"
 msgstr ""
 
-#: apps/offers/views.py:186
+#: apps/offers/views.py:183
 msgid "30 days"
 msgstr ""
 
-#: apps/offers/views.py:187
+#: apps/offers/views.py:184
 msgid "60 days"
 msgstr ""
 
-#: apps/offers/views.py:190
+#: apps/offers/views.py:187
 msgid "Saved."
 msgstr ""
 
-#: apps/offers/views.py:191
+#: apps/offers/views.py:188
 msgid "Could not start offer."
 msgstr ""
 
-#: apps/offers/views.py:192
+#: apps/offers/views.py:189
 msgid "Save failed."
 msgstr ""
 
-#: apps/offers/views.py:193
+#: apps/offers/views.py:190
 msgid "Request failed."
 msgstr ""
 
-#: apps/offers/views.py:195
+#: apps/offers/views.py:192
 msgid "Validation error."
 msgstr ""
 
-#: apps/offers/views.py:196
+#: apps/offers/views.py:193
 msgid "Remove line"
 msgstr ""
 
-#: apps/pdf/offer_pdf.py:85
+#: apps/pdf/offer_pdf.py:135
 #, python-format
 msgid "Offer %(id)s"
 msgstr ""
 
-#: apps/pdf/offer_pdf.py:185
-msgid "Offer"
-msgstr ""
-
-#: apps/pdf/offer_pdf.py:186
-#, python-format
-msgid "Offer #%(id)s"
-msgstr ""
-
-#: apps/pdf/offer_pdf.py:198
-msgid "Details"
-msgstr ""
-
-#: apps/pdf/offer_pdf.py:209
-msgid "Net"
-msgstr ""
-
-#: apps/pdf/offer_pdf.py:252
-msgid "Totals"
-msgstr ""
-
-#: apps/pdf/offer_pdf.py:256
-msgid "Total (incl. VAT)"
-msgstr ""
-
-#: apps/products/forms.py:14
+#: apps/products/forms.py:49
 msgid "Name"
 msgstr ""
 
-#: apps/products/forms.py:17
+#: apps/products/forms.py:52
 msgid "Base price"
 msgstr ""
 
-#: apps/products/forms.py:18
+#: apps/products/forms.py:53
 msgid "VAT rate (%)"
 msgstr ""
 
-#: apps/products/forms.py:37
+#: apps/products/forms.py:72
 msgid "Base price cannot be negative."
 msgstr ""
 
-#: apps/products/forms.py:45
+#: apps/products/forms.py:80
 msgid "VAT rate must be between 0 and 100."
+msgstr ""
+
+#: apps/products/forms.py:89
+msgid "Label (Bulgarian)"
+msgstr ""
+
+#: apps/products/forms.py:90
+msgid "Sort order"
 msgstr ""
 
 #: apps/products/templates/products/catalog_form.html:7
@@ -544,14 +527,98 @@ msgstr ""
 msgid "Add your first item"
 msgstr ""
 
-#: apps/products/views.py:60
+#: apps/products/templates/products/unit_form.html:7
+msgid "Set a unit label and display order. Code is generated automatically."
+msgstr ""
+
+#: apps/products/templates/products/unit_list.html:8 templates/base.html:109
+msgid "Units"
+msgstr ""
+
+#: apps/products/templates/products/unit_list.html:9
+msgid "Manage measurement units used in product catalog items."
+msgstr ""
+
+#: apps/products/templates/products/unit_list.html:12 apps/products/views.py:81
+msgid "Add unit"
+msgstr ""
+
+#: apps/products/templates/products/unit_list.html:24
+msgid "Code:"
+msgstr ""
+
+#: apps/products/templates/products/unit_list.html:25
+msgid "Sort:"
+msgstr ""
+
+#: apps/products/templates/products/unit_list.html:32
+msgid ""
+"Delete this unit? This cannot be undone if the unit is not used by any "
+"catalog item."
+msgstr ""
+
+#: apps/products/templates/products/unit_list.html:43
+msgid "No units yet."
+msgstr ""
+
+#: apps/products/templates/products/unit_list.html:43
+msgid "Add your first unit"
+msgstr ""
+
+#: apps/products/templates/products/unit_list.html:48
+msgid "Back to catalog"
+msgstr ""
+
+#: apps/products/views.py:32
+msgid "Add catalog item"
+msgstr ""
+
+#: apps/products/views.py:33 apps/products/views.py:82
+msgid "Create"
+msgstr ""
+
+#: apps/products/views.py:45
+msgid "Edit catalog item"
+msgstr ""
+
+#: apps/products/views.py:46 apps/products/views.py:103
+msgid "Save"
+msgstr ""
+
+#: apps/products/views.py:59
 #, python-format
 msgid "Cannot delete \"%(name)s\" because it is used on one or more offers."
 msgstr ""
 
-#: apps/products/views.py:64
+#: apps/products/views.py:63
 #, python-format
 msgid "Catalog item \"%(name)s\" was deleted."
+msgstr ""
+
+#: apps/products/views.py:89
+#, python-format
+msgid "Unit \"%(name)s\" was created."
+msgstr ""
+
+#: apps/products/views.py:102
+msgid "Edit unit"
+msgstr ""
+
+#: apps/products/views.py:110
+#, python-format
+msgid "Unit \"%(name)s\" was updated."
+msgstr ""
+
+#: apps/products/views.py:124
+#, python-format
+msgid ""
+"Cannot delete unit \"%(name)s\" because it is used by one or more catalog "
+"items."
+msgstr ""
+
+#: apps/products/views.py:128
+#, python-format
+msgid "Unit \"%(name)s\" was deleted."
 msgstr ""
 
 #: templates/base.html:7 templates/base.html:102
@@ -566,11 +633,11 @@ msgstr ""
 msgid "Catalog"
 msgstr ""
 
-#: templates/base.html:109
+#: templates/base.html:110
 msgid "Company"
 msgstr ""
 
-#: templates/base.html:113
+#: templates/base.html:114
 msgid "Logout"
 msgstr ""
 

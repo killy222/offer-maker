@@ -191,7 +191,7 @@ class OfferCreateView(LoginRequiredMixin, TemplateView):
             "noLinesYet": force_str(_("No lines yet. Add a product from the catalog.")),
             "validationError": force_str(_("Validation error.")),
             "removeLineTitle": force_str(_("Remove line")),
-            "currency": force_str(_("BGN")),
+            "currency": force_str(_("EUR")),
             "catalogSearchPlaceholder": force_str(_("Search (min. 3 characters)…")),
             "clientPlaceholder": force_str(_("Type to search or enter a new name…")),
             "locale": translation.get_language() or "bg",
