@@ -1,8 +1,10 @@
 import json
 import os
 
-import boto3
-from django.core.management.base import BaseCommand
+from botocore.exceptions import ClientError
+from django.core.management.base import BaseCommand, CommandError
+
+from apps.core.s3_client import s3_client_from_env
 
 
 class Command(BaseCommand):
@@ -15,22 +17,24 @@ class Command(BaseCommand):
             )
             return
 
-        bucket_name = os.getenv("AWS_STORAGE_BUCKET_NAME", "offer-creator-media")
-        endpoint_url = os.getenv("AWS_S3_ENDPOINT_URL", "http://minio:9000")
-        region_name = os.getenv("AWS_S3_REGION_NAME", "us-east-1")
-        access_key = os.getenv("AWS_ACCESS_KEY_ID", "minioadmin")
-        secret_key = os.getenv("AWS_SECRET_ACCESS_KEY", "minioadmin")
+        client, cfg = s3_client_from_env()
+        bucket_name = cfg["bucket_name"]
+        endpoint_url = cfg["endpoint_url"]
 
-        client = boto3.client(
-            "s3",
-            endpoint_url=endpoint_url,
-            region_name=region_name,
-            aws_access_key_id=access_key,
-            aws_secret_access_key=secret_key,
-        )
+        self.stdout.write(f"S3 endpoint: {endpoint_url}")
+        self.stdout.write(f"S3 bucket: {bucket_name}")
 
-        existing_buckets = [bucket["Name"] for bucket in client.list_buckets().get("Buckets", [])]
-        if bucket_name not in existing_buckets:
+        try:
+            client.head_bucket(Bucket=bucket_name)
+            self.stdout.write(self.style.SUCCESS(f"Bucket exists: {bucket_name}"))
+        except ClientError as exc:
+            error_code = exc.response.get("Error", {}).get("Code", "")
+            if error_code not in {"404", "NoSuchBucket", "NotFound"}:
+                raise CommandError(
+                    f"Cannot access bucket {bucket_name!r} at {endpoint_url}: {exc}"
+                ) from exc
+
+            self.stdout.write(f"Creating bucket: {bucket_name}")
             client.create_bucket(Bucket=bucket_name)
             self.stdout.write(self.style.SUCCESS(f"Created bucket: {bucket_name}"))
 
@@ -46,5 +50,13 @@ class Command(BaseCommand):
                 }
             ],
         }
-        client.put_bucket_policy(Bucket=bucket_name, Policy=json.dumps(policy))
+        try:
+            client.put_bucket_policy(Bucket=bucket_name, Policy=json.dumps(policy))
+        except ClientError as exc:
+            raise CommandError(f"Could not set bucket policy on {bucket_name}: {exc}") from exc
+
+        probe_key = "media/.bucket-probe"
+        client.put_object(Bucket=bucket_name, Key=probe_key, Body=b"ok")
+        client.delete_object(Bucket=bucket_name, Key=probe_key)
+
         self.stdout.write(self.style.SUCCESS(f"Bucket is ready: {bucket_name}"))

@@ -183,7 +183,10 @@ if "pytest" in sys.argv[0]:
     USE_S3_STORAGE = False
 
 if USE_S3_STORAGE:
-    from apps.core.s3_public_url import storages_custom_domain_from_public_url
+    from apps.core.s3_public_url import (
+        normalize_public_url,
+        storages_custom_domain_from_public_url,
+    )
 
     AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "minioadmin")
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "minioadmin")
@@ -196,7 +199,7 @@ if USE_S3_STORAGE:
     AWS_LOCATION = os.getenv("AWS_LOCATION", "media")
     _s3_explicit_custom_domain = os.getenv("AWS_S3_CUSTOM_DOMAIN", "").strip()
     _s3_explicit_url_protocol = os.getenv("AWS_S3_URL_PROTOCOL", "").strip()
-    _s3_public_url = os.getenv("AWS_S3_PUBLIC_URL", "").strip()
+    _s3_public_url = normalize_public_url(os.getenv("AWS_S3_PUBLIC_URL", ""))
 
     _s3_storage_options = {
         "access_key": AWS_ACCESS_KEY_ID,
